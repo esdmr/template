@@ -39,5 +39,4 @@ jobs:
         restore-keys: |
           ${{ runner.OS }}-pnpm-
     - run: pnpm install
-    - run: pnpm run prepare --if-present
     - run: pnpm run test --if-present

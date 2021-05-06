@@ -6,8 +6,8 @@
     "build": "tsc -p .",
     "watch": "tsc -w -p .",
     "prepare": "npm run clean && npm run build",
-    "lint": "eslint src --ext .ts",
-    "lint:fix": "eslint src --ext .ts --fix",
+    "lint": "xo src/**.ts test/**.js",
+    "lint:fix": "npm run lint -- --fix",
     "tap": "tap --no-coverage",
     "tap:coverage": "NODE_OPTIONS=\"--experimental-loader @istanbuljs/esm-loader-hook\" tap",
     "tap:coverage-report": "npm run tap:coverage -- --coverage-report=html",
@@ -18,15 +18,9 @@
   "devDependencies": {
     "@istanbuljs/esm-loader-hook": "^0.1.2",
     "@types/node": "^15.0.2",
-    "@typescript-eslint/eslint-plugin": "^4.22.1",
-    "@typescript-eslint/parser": "^4.22.1",
-    "eslint": "^7.25.0",
-    "eslint-config-standard-with-typescript": "^20.0.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.0",
     "rimraf": "^3.0.2",
     "tap": "^15.0.6",
-    "typescript": "^4.2.4"
+    "typescript": "^4.2.4",
+    "xo": "^0.39.1"
   }
 }

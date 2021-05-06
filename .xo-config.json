@@ -1,0 +1,30 @@
+{
+  "overrides": [
+    {
+      "files": "**.ts",
+      "rules": {
+        "@typescript-eslint/comma-dangle": [
+          "error",
+          "always-multiline"
+        ],
+        "@typescript-eslint/space-before-function-paren": [
+          "error",
+          "always"
+        ]
+      }
+    },
+    {
+      "files": "**.js",
+      "rules": {
+        "comma-dangle": [
+          "error",
+          "always-multiline"
+        ],
+        "space-before-function-paren": [
+          "error",
+          "always"
+        ]
+      }
+    }
+  ]
+}

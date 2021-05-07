@@ -6,7 +6,7 @@
     "build": "tsc -p .",
     "watch": "tsc -w -p .",
     "prepare": "npm run clean && npm run build",
-    "lint": "xo src/**.ts test/**.js",
+    "lint": "xo src/**/*.ts test/**/*.js",
     "lint:fix": "npm run lint -- --fix",
     "tap": "tap --no-coverage",
     "tap:coverage": "NODE_OPTIONS=\"--experimental-loader @istanbuljs/esm-loader-hook\" tap",

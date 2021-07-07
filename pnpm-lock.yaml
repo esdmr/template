@@ -1,8 +1,11 @@
 lockfileVersion: 5.3
 
+overrides:
+  '@types/node': 15.0.1
+
 specifiers:
   '@istanbuljs/esm-loader-hook': 0.1.2
-  '@types/node': 15.12.2
+  '@types/node': 15.0.1
   '@types/tap': 15.0.5
   rimraf: 3.0.2
   tap: 15.0.9
@@ -11,7 +14,7 @@ specifiers:
 
 devDependencies:
   '@istanbuljs/esm-loader-hook': 0.1.2
-  '@types/node': 15.12.2
+  '@types/node': 15.0.1
   '@types/tap': 15.0.5
   rimraf: 3.0.2
   tap: 15.0.9_typescript@4.3.5
@@ -442,7 +445,7 @@ packages:
     resolution: {integrity: sha512-SEYeGAIQIQX8NN6LDKprLjbrd5dARM5EXsd8GI/A5l0apYI1fGMWgPHSe4ZKL4eozlAyI+doUE9XbYS4xCkQ1w==}
     dependencies:
       '@types/minimatch': 3.0.4
-      '@types/node': 15.12.2
+      '@types/node': 15.0.1
     dev: true
 
   /@types/json-schema/7.0.7:
@@ -461,8 +464,8 @@ packages:
     resolution: {integrity: sha512-fZQQafSREFyuZcdWFAExYjBiCL7AUCdgsk80iO0q4yihYYdcIiH28CcuPTGFgLOCC8RlW49GSQxdHwZP+I7CNg==}
     dev: true
 
-  /@types/node/15.12.2:
-    resolution: {integrity: sha512-zjQ69G564OCIWIOHSXyQEEDpdpGl+G348RAKY0XXy9Z5kU9Vzv1GMNnkar/ZJ8dzXB3COzD9Mo9NtRZ4xfgUww==}
+  /@types/node/15.0.1:
+    resolution: {integrity: sha512-TMkXt0Ck1y0KKsGr9gJtWGjttxlZnnvDtphxUOSd0bfaR6Q1jle+sPvrzNR1urqYTWMinoKvjKfXUGsumaO1PA==}
     dev: true
 
   /@types/normalize-package-data/2.4.0:
@@ -476,7 +479,7 @@ packages:
   /@types/tap/15.0.5:
     resolution: {integrity: sha512-MaP+EgZNFAGRvVjHWv8ldrLvYBn4PnmAlzY7IL3/RPAPkOXdggTSTgLFONbnTpdQTe8+ixYGAySKAm9ESlZm1A==}
     dependencies:
-      '@types/node': 15.12.2
+      '@types/node': 15.0.1
     dev: true
 
   /@typescript-eslint/eslint-plugin/4.28.1_37ea0521d4014002f404f9b7c2b7f3d2:

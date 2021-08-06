@@ -21,7 +21,8 @@
     "build/**/*.js",
     "build/**/*.d.ts",
     "!build/test/**/*",
-    "!build/docs/**/*"
+    "!build/docs/**/*",
+    "!build/api/**/*"
   ],
   "scripts": {
     "build": "tsc -b",
@@ -31,12 +32,14 @@
     "lint:fix": "xo --fix",
     "test": "tap --no-coverage",
     "test:coverage": "NODE_OPTIONS=\"--no-warnings --experimental-loader @istanbuljs/esm-loader-hook\" tap",
-    "test:coverage-html": "npm run test:coverage -- --coverage-report=html",
-    "test:coverage-lcov": "npm run test:coverage -- --coverage-report=lcovonly",
+    "test:coverage-html": "pnpm run test:coverage -- --coverage-report=html",
+    "test:coverage-lcov": "pnpm run test:coverage -- --coverage-report=lcovonly",
     "watch": "tsc -b -w"
   },
   "devDependencies": {
     "@istanbuljs/esm-loader-hook": "0.1.2",
+    "@microsoft/api-documenter": "^7.13.34",
+    "@microsoft/api-extractor": "^7.18.4",
     "@types/node": "16.4.3",
     "@types/tap": "15.0.5",
     "rimraf": "3.0.2",
@@ -55,6 +58,15 @@
   "pnpm": {
     "overrides": {
       "@types/node": "^16.0.0"
+    },
+    "packageExtensions": {
+      "eslint-import-resolver-webpack": {
+        "peerDependenciesMeta": {
+          "webpack": {
+            "optional": true
+          }
+        }
+      }
     }
   }
 }

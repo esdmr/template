@@ -50,7 +50,7 @@
   },
   "imports": {
     "#src/*": "./build/*",
-    "#test-util/*": "./build/test/test-util/*"
+    "#test/*": "./build/test/*"
   },
   "pnpm": {
     "overrides": {

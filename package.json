@@ -20,8 +20,8 @@
   "author": "Saeed M Rad",
   "license": "MIT",
   "engines": {
-    "node": ">=16.0.0",
-    "pnpm": ">=6.11.0"
+    "node": ">=16",
+    "pnpm": "6"
   },
   "devDependencies": {
     "@istanbuljs/esm-loader-hook": "0.1.2",

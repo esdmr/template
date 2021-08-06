@@ -11,7 +11,7 @@ on:
 
 env:
   JOB_NODE_VERSION: 16.x
-  JOB_PNPM_VERSION: "6.9.0"
+  JOB_PNPM_VERSION: "6.11.0"
 
 jobs:
   lint:
@@ -20,11 +20,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ env.JOB_NODE_VERSION }}
+      - name: Use Node.js
         uses: actions/setup-node@v2
         with:
           node-version: ${{ env.JOB_NODE_VERSION }}
-      - name: Use PNPM ${{ env.JOB_PNPM_VERSION }}
+      - name: Use PNPM
         uses: pnpm/action-setup@v2.0.1
         with:
           version: ${{ env.JOB_PNPM_VERSION }}

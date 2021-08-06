@@ -4,7 +4,7 @@
     "config:base"
   ],
   "constraints": {
-    "pnpm": "6.11.x"
+    "pnpm": "6"
   },
   "labels": [
     "renovate"

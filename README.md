@@ -2,7 +2,7 @@
 [![GitHub workflow](https://img.shields.io/github/workflow/status/esdmr/template/CI/master?label=test&labelColor=0F0F0F&logo=github)][workflow]
 [![Codecov coverage](https://img.shields.io/codecov/c/gh/esdmr/template/master?labelColor=0F0F0F&logo=CodeCov&logoColor=FF66B0)][codecov]
 [![NodeJS version](https://img.shields.io/badge/node-≥16-brightgreen?labelColor=0F0F0F&logo=node.js&logoColor=00B834)][node]
-[![PNPM version](https://img.shields.io/badge/pnpm-6-brightgreen?labelColor=0F0F0F&logo=pnpm)][pnpm]
+[![pnpm version](https://img.shields.io/badge/pnpm-6-brightgreen?labelColor=0F0F0F&logo=pnpm)][pnpm]
 [![License](https://img.shields.io/github/license/esdmr/template?labelColor=0F0F0F)][license]
 
 [workflow]: https://github.com/esdmr/template/actions/workflows/ci.yml
@@ -18,8 +18,8 @@ Description here
 This project requires [Node.JS][node] version 16 minimum. Please ensure that you
 have installed the correct version of Node.JS by running `node --version`.
 
-This project recommends [PNPM][pnpm] version 6. Please ensure that you have
-installed the correct version of PNPM by running `pnpm --version`.
+This project recommends [pnpm][pnpm] version 6. Please ensure that you have
+installed the correct version of pnpm by running `pnpm --version`.
 
 The following snippet will download, install, and build the source from GitHub.
 

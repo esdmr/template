@@ -57,7 +57,8 @@
   },
   "pnpm": {
     "overrides": {
-      "@types/node": "^16.0.0"
+      "@types/node": "^16.0.0",
+      "es-abstract": "^1.18.5"
     },
     "packageExtensions": {
       "eslint-import-resolver-webpack": {

@@ -25,14 +25,16 @@
     "!build/api/**/*"
   ],
   "scripts": {
-    "api:extractor": "api-extractor run --local --verbose",
-    "api:documenter": "api-documenter markdown -i build/api -o build/docs",
     "api": "pnpm run api:extractor && pnpm run api:documenter",
+    "api:documenter": "api-documenter markdown -i build/api -o build/docs",
+    "api:extractor": "api-extractor run --local --verbose",
     "build": "tsc -b",
     "clean": "rimraf build .nyc_output coverage",
     "preinstall": "npx -y only-allow pnpm",
     "lint": "xo",
     "lint:fix": "xo --fix",
+    "prepublishOnly": "node prepublish.cjs",
+    "postpublish": "node postpublish.cjs",
     "test": "tap --no-coverage",
     "test:coverage": "NODE_OPTIONS=\"--no-warnings --experimental-loader @istanbuljs/esm-loader-hook\" tap",
     "test:coverage-html": "pnpm run test:coverage -- --coverage-report=html",

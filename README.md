@@ -11,20 +11,8 @@
 [pnpm]: https://pnpm.io
 [license]: https://github.com/esdmr/template/blob/master/LICENSE
 
-This is a template for TypeScript projects. It provides:
-
-- Testing and coverage utilities via [node-tap][node-tap],
-- Linting via [XO][xojs],
-- Documentation via [api-extractor and api-documenter][rushstack],
-- Semi-automatic dependency upgrades using [Renovate bot][renovate],
-- And GitHub Workflows for automated testing and documentation.
-
+This is a template for TypeScript projects.
 Further information at [the wiki](https://github.com/esdmr/template/wiki).
-
-[node-tap]: https://github.com/tapjs/node-tap
-[xojs]: https://github.com/xojs/xo
-[rushstack]: https://github.com/microsoft/rushstack/
-[renovate]: https://github.com/marketplace/renovate
 
 ## Install from source
 

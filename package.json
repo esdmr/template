@@ -29,6 +29,8 @@
     "api:documenter": "api-documenter markdown -i build/api -o build/docs",
     "api:extractor": "api-extractor run --local --verbose",
     "build": "tsc -b",
+    "changeset": "changeset",
+    "changeset:version": "changeset version",
     "clean": "rimraf build .nyc_output coverage",
     "preinstall": "npx -y only-allow pnpm",
     "lint": "xo",
@@ -42,6 +44,7 @@
     "watch": "tsc -b -w"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.16.0",
     "@istanbuljs/esm-loader-hook": "0.1.2",
     "@microsoft/api-documenter": "^7.13.40",
     "@microsoft/api-extractor": "^7.18.6",

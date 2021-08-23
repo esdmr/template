@@ -49,10 +49,21 @@ function getMetadata () {
 async function main () {
 	const metadata = getMetadata();
 
+	console.log('pnpm install');
 	await spawn('pnpm', ['install'], {});
+
+	console.log('pnpm run lint');
 	await spawn('pnpm', ['run', 'lint'], {});
+
+	console.log('pnpm run build');
 	await spawn('pnpm', ['run', 'build'], {});
+
+	console.log('pnpm run test');
 	await spawn('pnpm', ['run', 'test'], {});
+
+	console.log('mv package.json …');
 	await fs.rename('package.json', '.package.dev.json');
+
+	console.log('new package.json');
 	await fs.writeFile('package.json', JSON.stringify(metadata));
 }

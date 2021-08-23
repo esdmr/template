@@ -1,7 +1,11 @@
+#!/usr/bin/env node
 const child = require('node:child_process');
 const fs = require('node:fs/promises');
 
-main().catch(console.error);
+main().catch((error) => {
+	console.error(error);
+	process.exit(1);
+});
 
 /**
  * @param {Parameters<typeof child.spawn>} args

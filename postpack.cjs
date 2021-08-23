@@ -1,6 +1,10 @@
+#!/usr/bin/env node
 const fs = require('node:fs/promises');
 
-main().catch(console.error);
+main().catch((error) => {
+	console.error(error);
+	process.exit(1);
+});
 
 async function main () {
 	console.log('rm package.json');

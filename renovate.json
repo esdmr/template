@@ -18,6 +18,7 @@
   "npm": {
     "stabilityDays": 3
   },
+  "timezone": "IR",
   "packageRules": [
     {
       "matchDepTypes": [

@@ -14,6 +14,21 @@
 This is a template for TypeScript projects.
 Further information at [the wiki](https://github.com/esdmr/template/wiki).
 
+## Install as a dependency
+
+This project requires [Node.JS][node] version 16 minimum. Ensure that you have
+installed the correct version of Node.JS by running `node --version`.
+
+Any of the following snippets will install this project as a dependency:
+
+```sh
+npm install --save @esdmr/template
+# Or
+yarn add @esdmr/template
+# Or
+pnpm install @esdmr/template
+```
+
 ## Install from source
 
 This project requires [Node.JS][node] version 16 minimum. Ensure that you have

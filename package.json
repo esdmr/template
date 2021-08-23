@@ -25,6 +25,9 @@
     "!build/api/**/*"
   ],
   "scripts": {
+    "api:extractor": "api-extractor run --local --verbose",
+    "api:documenter": "api-documenter markdown -i build/api -o build/docs",
+    "api": "pnpm run api:extractor && pnpm run api:documenter",
     "build": "tsc -b",
     "clean": "rimraf build .nyc_output coverage",
     "preinstall": "npx -y only-allow pnpm",

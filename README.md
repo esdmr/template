@@ -11,23 +11,48 @@
 [pnpm]: https://pnpm.io
 [license]: https://github.com/esdmr/template/blob/master/LICENSE
 
-Description here
+This is a template for TypeScript projects. It provides:
+
+- Testing and coverage utilities via [node-tap][node-tap],
+- Linting via [XO][xojs],
+- Documentation via [api-extractor and api-documenter][rushstack],
+- Semi-automatic dependency upgrades using [Renovate bot][renovate],
+- And GitHub Workflows for automated testing and documentation.
+
+Further information at [the wiki](https://github.com/esdmr/template/wiki).
+
+[node-tap]: https://github.com/tapjs/node-tap
+[xojs]: https://github.com/xojs/xo
+[rushstack]: https://github.com/microsoft/rushstack/
+[renovate]: https://github.com/marketplace/renovate
 
 ## Install from source
 
-This project requires [Node.JS][node] version 16 minimum. Please ensure that you
-have installed the correct version of Node.JS by running `node --version`.
+This project requires [Node.JS][node] version 16 minimum. Ensure that you have
+installed the correct version of Node.JS by running `node --version`.
 
-This project recommends [pnpm][pnpm] version 6. Please ensure that you have
-installed the correct version of pnpm by running `pnpm --version`.
+This project recommends [pnpm][pnpm] version 6. Ensure that you have installed
+the correct version of pnpm by running `pnpm --version`.
 
-The following snippet will download, install, and build the source from GitHub.
+The following snippet will download, install, and build the source from GitHub:
 
 ```sh
 git clone https://github.com/esdmr/template.git
 cd template
 pnpm install
 pnpm run build
+```
+
+## Online documentation
+
+Available at [The GitHub Pages](https://esdmr.github.io/template/).
+
+## Building the documentation locally
+
+The following snippet will build the documentation at `build/docs/`:
+
+```sh
+pnpm run api
 ```
 
 ## License

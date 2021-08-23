@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const fs = require('node:fs/promises');
+const process = require('node:process');
 
 main().catch((error) => {
 	console.error(error);

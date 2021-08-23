@@ -22,9 +22,9 @@ async function spawn (...args) {
 		process.once('exit', (code) => {
 			if (!done) {
 				if (code) {
-					resolve();
-				} else {
 					reject(new Error(`Process failed with error code: ${code}`));
+				} else {
+					resolve();
 				}
 
 				done = true;

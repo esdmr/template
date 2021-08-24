@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-/// <reference lib="es2021"/>
 const child = require('node:child_process');
 const process = require('node:process');
 const readline = require('node:readline');
@@ -62,6 +61,10 @@ class StringMatcher {
 		const value = this.matcher[key];
 		const endIndex = index + key.length;
 
+		if (value === undefined) {
+			throw new Error(`Matcher could not find a value for ${key}`);
+		}
+
 		this.text = this.text.slice(0, index)
 			+ value
 			+ this.text.slice(endIndex);
@@ -110,7 +113,7 @@ async function spawn (...args) {
 		let done = false;
 		let stdout = '';
 
-		process.stdout.on('data', (data) => {
+		process.stdout?.on('data', (data) => {
 			if (!done) {
 				stdout += data.toString();
 			}
@@ -155,7 +158,7 @@ async function main () {
 
 	const userDefault = match?.groups?.user ?? '';
 	const repoDefault = match?.groups?.repo ?? '';
-	const tzDefault = process.env.LC_TIME.match(/_(\w\w)/u)?.[1] ?? '';
+	const tzDefault = process.env.LC_TIME?.match(/_(\w\w)/u)?.[1] ?? '';
 	const yearDefault = String(new Date().getUTCFullYear());
 
 	const USER = await readParameter('<USER> Enter the GitHub username', userDefault);

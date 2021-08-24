@@ -7,10 +7,10 @@ overrides:
 packageExtensionsChecksum: c6269d4d2b8f53749e9a6ff01733da3a
 
 specifiers:
-  '@changesets/cli': ^2.16.0
+  '@changesets/cli': 2.16.0
   '@istanbuljs/esm-loader-hook': 0.1.2
-  '@microsoft/api-documenter': ^7.13.40
-  '@microsoft/api-extractor': ^7.18.6
+  '@microsoft/api-documenter': 7.13.40
+  '@microsoft/api-extractor': 7.18.6
   '@types/node': ^16.0.0
   '@types/tap': 15.0.5
   rimraf: 3.0.2

@@ -22,7 +22,7 @@ begin
             manually create and populate an (set_color_str _index.txt) \
             file.
 
-        groupcmd git rm -rf '*'
+        groupcmd git rm -rf --ignore-unmatch '*'
         or fail Failed to remove every file.
 
         assert groupcmd touch _index.txt

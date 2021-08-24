@@ -58,6 +58,15 @@ The following snippet will build the documentation at `build/docs/`:
 pnpm run api
 ```
 
+## Template
+
+This project was created with the [`esdmr/template`][template] project. See
+[its wiki][template-wiki]
+on how to contribute to this project.
+
+[template]: https://github.com/esdmr/template
+[template-wiki]: https://github.com/esdmr/template/wiki
+
 ## License
 
 See [License][license].

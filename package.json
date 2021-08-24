@@ -1,40 +1,81 @@
 {
+  "name": "@esdmr/template",
+  "version": "0.0.0",
   "private": true,
+  "description": "Template project",
+  "homepage": "https://github.com/esdmr/template#readme",
+  "bugs": "https://github.com/esdmr/template/issues",
+  "repository": "https://github.com/esdmr/template",
+  "license": "MIT",
+  "author": "Saeed M Rad <esdmr0@gmail.com> (https://github.com/esdmr)",
   "type": "module",
-  "imports": {
-    "#src/*": "./build/*",
-    "#test-util/*": "./build/test/test-util/*"
+  "exports": {
+    ".": {
+      "import": "./build/main.js",
+      "types": "./build/main.d.ts"
+    }
   },
+  "main": "build/main.js",
+  "types": "build/main.d.ts",
+  "files": [
+    "build/**/*.js",
+    "build/**/*.d.ts",
+    "!build/test/**/*",
+    "!build/docs/**/*",
+    "!build/api/**/*"
+  ],
   "scripts": {
-    "preinstall": "npx -y only-allow pnpm",
-    "clean": "rimraf build .nyc_output coverage",
+    "api": "pnpm run api:extractor && pnpm run api:documenter",
+    "api:documenter": "api-documenter markdown -i build/api -o build/docs",
+    "api:extractor": "api-extractor run --local --verbose",
     "build": "tsc -b",
-    "watch": "tsc -b -w",
+    "changeset": "changeset",
+    "changeset:version": "changeset version",
+    "clean": "rimraf build .nyc_output coverage",
+    "preinstall": "npx -y only-allow pnpm",
     "lint": "xo",
     "lint:fix": "xo --fix",
+    "prepack": "node prepack.cjs",
+    "postpack": "node postpack.cjs",
     "test": "tap --no-coverage",
     "test:coverage": "NODE_OPTIONS=\"--no-warnings --experimental-loader @istanbuljs/esm-loader-hook\" tap",
-    "test:coverage-html": "npm run test:coverage -- --coverage-report=html",
-    "test:coverage-lcov": "npm run test:coverage -- --coverage-report=lcovonly"
-  },
-  "author": "Saeed M Rad",
-  "license": "MIT",
-  "engines": {
-    "node": ">=16.0.0",
-    "pnpm": ">=6.9.0"
+    "test:coverage-html": "pnpm run test:coverage -- --coverage-report=html",
+    "test:coverage-lcov": "pnpm run test:coverage -- --coverage-report=lcovonly",
+    "watch": "tsc -b -w"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.16.0",
     "@istanbuljs/esm-loader-hook": "0.1.2",
-    "@types/node": "16.4.3",
+    "@microsoft/api-documenter": "^7.13.40",
+    "@microsoft/api-extractor": "^7.18.6",
+    "@types/node": "^16.7.1",
     "@types/tap": "15.0.5",
     "rimraf": "3.0.2",
     "tap": "15.0.9",
     "typescript": "4.3.5",
     "xo": "0.44.0"
   },
+  "engines": {
+    "node": ">=16",
+    "pnpm": "6"
+  },
+  "imports": {
+    "#src/*": "./build/*",
+    "#test/*": "./build/test/*"
+  },
   "pnpm": {
     "overrides": {
-      "@types/node": "^16.0.0"
+      "@types/node": "^16.0.0",
+      "es-abstract": "^1.18.5"
+    },
+    "packageExtensions": {
+      "eslint-import-resolver-webpack": {
+        "peerDependenciesMeta": {
+          "webpack": {
+            "optional": true
+          }
+        }
+      }
     }
   }
 }

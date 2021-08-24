@@ -34,7 +34,7 @@ jobs:
     steps:
       # Setup
       - name: Install fish
-        uses: fish-actions/install-fish@d6d9d26231a15f8d9a6b3e74b3db45512440e3e8
+        uses: fish-actions/install-fish@029690efff3252f04a50f881453d4571e3409b6e
 
       - name: Setup Node.js
         uses: actions/setup-node@v2

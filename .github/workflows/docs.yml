@@ -64,7 +64,7 @@ jobs:
 
       # Checkout
       - name: Create documentation branch if non-existent
-        uses: esdmr/action-create-branch@a25fc0dd0d021c9be45ac212c4018887bd10fa71
+        uses: esdmr/action-create-branch@cde5be66dae4dc5547ba71e1cdf8522708eba723
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:

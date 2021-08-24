@@ -18,5 +18,5 @@ for filename in (assert find build/docs -name '*.md')
     assert groupcmd ed $filename <$ed_commands_file
 end
 
-# Clean up the
+# Clean up the files
 assert rm -f $ed_commands_file

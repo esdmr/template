@@ -159,6 +159,7 @@ async function main () {
 	const userDefault = match?.groups?.user ?? '';
 	const repoDefault = match?.groups?.repo ?? '';
 	const yearDefault = String(new Date().getUTCFullYear());
+	const tzDefault = new Intl.DateTimeFormat().resolvedOptions().timeZone ?? '';
 
 	const USER = await readParameter('<USER> Enter the GitHub username', userDefault);
 	const REPO = await readParameter('<REPO> Enter name of the new repository', repoDefault);
@@ -173,7 +174,7 @@ async function main () {
 	const NAME = await readParameter('<NAME> Enter your name', gitUserName);
 	const EMAIL = await readParameter('<EMAIL> Enter your public email address', gitUserEmail);
 	const YEAR = await readParameter('<YEAR> Enter the current year', yearDefault);
-	const TIMEZONE = await readParameter('<TIMEZONE> Enter your IANA Time Zone');
+	const TIMEZONE = await readParameter('<TIMEZONE> Enter your IANA Time Zone', tzDefault);
 
 	rl.close();
 
@@ -214,7 +215,7 @@ async function main () {
 	}));
 
 	await patch('renovate.json', (text) => text
-		.replace('Asia/Tehran', TIMEZONE.toUpperCase()));
+		.replace('Asia/Tehran', TIMEZONE));
 
 	console.log('Deleting placeholder.cjs');
 	await fs.unlink('placeholder.cjs');

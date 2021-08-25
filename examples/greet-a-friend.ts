@@ -1,4 +1,3 @@
-/* eslint-disable */
 import greet from '@esdmr/template';
 
 const FRIEND_NAME = 'John doe';

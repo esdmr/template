@@ -10,7 +10,7 @@ const rl = readline.createInterface({
 });
 
 const README_DESCRIPTION = `This is a template for TypeScript projects.
-Further information at [the wiki](https://github.com/esdmr/template/wiki).`;
+Further information at [the wiki](https://github.com/esdmr/template/wiki)`;
 
 const README_LINK_TEMPLATE = '[`esdmr/template`][template]';
 const README_LINK_WIKI = '[its wiki][template-wiki]';

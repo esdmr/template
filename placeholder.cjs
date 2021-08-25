@@ -9,14 +9,6 @@ const rl = readline.createInterface({
 	output: process.stdout,
 });
 
-const README_DESCRIPTION = `This is a template for TypeScript projects.
-Further information at [the wiki](https://github.com/esdmr/template/wiki)`;
-
-const README_LINK_TEMPLATE = '[`esdmr/template`][template]';
-const README_LINK_WIKI = '[its wiki][template-wiki]';
-const README_LINK_LIST = `[template]: https://github.com/esdmr/template
-[template-wiki]: https://github.com/esdmr/template/wiki`;
-
 rl.once('SIGINT', () => {
 	console.log();
 	process.exit(1);
@@ -46,6 +38,13 @@ class StringMatcher {
 		this.matcher = matcher;
 		this.keys = Object.keys(matcher).sort((a, b) => b.length - a.length);
 		this.index = 0;
+	}
+
+	/**
+	 * @param {ConstructorParameters<typeof StringMatcher>} args
+	 */
+	static replaceAll (...args) {
+		return new StringMatcher(...args).replaceAll();
 	}
 
 	matchNext () {
@@ -84,6 +83,123 @@ class StringMatcher {
 		while (this.replaceNext()) {}
 
 		return this.text;
+	}
+}
+
+const TOKEN_TEXT = 0;
+const TOKEN_BEGIN = 1;
+const TOKEN_END = 2;
+
+class MarkdownMatcher {
+	/**
+	 * @param {string} text
+	 * @param {Record<string, string>} vars
+	 * @param {Record<string, string>} matcher
+	 */
+	constructor (text, vars, matcher = {}) {
+		this.text = text;
+		this.vars = vars;
+		this.matcher = matcher;
+		this.reText = /[\s\S]((?!<!--)[\s\S])*/uy;
+		this.reRegion = /<!-- *#region placeholder (?<name>\w+) *-->\n/uy;
+		this.reEndRegion = /<!-- *#endregion placeholder *-->\n/uy;
+		this.parts = [];
+		this.currentPart = '';
+		this.name = undefined;
+	}
+
+	/**
+	 * @param {ConstructorParameters<typeof MarkdownMatcher>} args
+	 */
+	static replaceAll (...args) {
+		return new this(...args).replaceAll();
+	}
+
+	getNextToken () {
+		const { text, reRegion, reEndRegion, reText } = this;
+		const matchName = reRegion.exec(text)?.groups?.name;
+
+		if (matchName) {
+			reEndRegion.lastIndex = reRegion.lastIndex;
+			reText.lastIndex = reRegion.lastIndex;
+
+			return {
+				type: TOKEN_BEGIN,
+				value: matchName,
+			};
+		}
+
+		if (reEndRegion.test(text)) {
+			reRegion.lastIndex = reEndRegion.lastIndex;
+			reText.lastIndex = reRegion.lastIndex;
+
+			return {
+				type: TOKEN_END,
+				value: '',
+			};
+		}
+
+		const matchText = reText.exec(text)?.[0];
+
+		if (matchText === undefined) {
+			return undefined;
+		}
+
+		reRegion.lastIndex = reText.lastIndex;
+		reEndRegion.lastIndex = reText.lastIndex;
+
+		return {
+			type: TOKEN_TEXT,
+			value: matchText,
+		};
+	}
+
+	commitPart () {
+		switch (this.name) {
+			case 'keep':
+				this.parts.push(this.currentPart);
+				break;
+
+			case 'delete':
+				break;
+
+			case undefined:
+				this.parts.push(StringMatcher.replaceAll(this.currentPart, this.matcher));
+				break;
+
+			default:
+				this.parts.push((this.vars[this.name] + '\n') ?? '');
+		}
+
+		this.currentPart = '';
+	}
+
+	replaceAll () {
+		let token;
+
+		while ((token = this.getNextToken()) !== undefined) {
+			switch (token.type) {
+				case TOKEN_TEXT:
+					this.currentPart += token.value;
+					break;
+
+				case TOKEN_BEGIN:
+					this.commitPart();
+					this.name = token.value;
+					break;
+
+				case TOKEN_END:
+					this.commitPart();
+					this.name = undefined;
+					break;
+
+				default:
+					throw new Error('Unknown token type');
+			}
+		}
+
+		this.commitPart();
+		return this.parts.join('');
 	}
 }
 
@@ -183,26 +299,24 @@ async function main () {
 
 	rl.close();
 
+	const commonMatcher = {
+		'@esdmr/template': PACKAGE,
+		'esdmr0@gmail.com': EMAIL,
+		esdmr: USER,
+		template: REPO,
+		'Saeed M Rad': NAME,
+		2021: YEAR,
+	};
+
 	/**
 	 * @param {string} text
-	 * @param {Record<string, string>} matcher
+	 * @param {Record<string, string>} customMatcher
 	 * @returns {string}
 	 */
-	function replaceCommon (text, matcher = {}) {
-		matcher = {
-			...matcher,
-			'@esdmr/template': PACKAGE,
-			'esdmr0@gmail.com': EMAIL,
-			esdmr: USER,
-			template: REPO,
-			'Saeed M Rad': NAME,
-			2021: YEAR,
-		};
-
-		Object.setPrototypeOf(matcher, null);
-
-		return new StringMatcher(text, matcher).replaceAll();
-	}
+	const replaceCommon = (text, customMatcher = {}) => StringMatcher.replaceAll(text, {
+		...customMatcher,
+		...commonMatcher,
+	});
 
 	await patch('.github/pages-template/_includes/head_custom.html', replaceCommon);
 	await patch('.github/pages-template/_config.yml', replaceCommon);
@@ -214,16 +328,20 @@ async function main () {
 		'  "private": true,\n': '',
 	}));
 
-	await patch('README.md', (text) => replaceCommon(text, {
-		[README_DESCRIPTION]: DESCRIPTION,
-		[README_LINK_TEMPLATE]: README_LINK_TEMPLATE,
-		[README_LINK_WIKI]: README_LINK_WIKI,
-		[README_LINK_LIST]: README_LINK_LIST,
+	await patch('README.md', (text) => MarkdownMatcher.replaceAll(text, {
+		DESCRIPTION,
+	}, {
 		'Template Project': PROJECT,
+		...commonMatcher,
 	}));
 
 	await patch('renovate.json', (text) => text
 		.replace('Asia/Tehran', TIMEZONE));
+
+	console.log('Clearing code');
+	await fs.writeFile('src/main.ts', '');
+	await fs.writeFile('test/main.ts', '');
+	await fs.unlink('examples/greet-a-friend.ts');
 
 	console.log('Deleting placeholder.cjs');
 	await fs.unlink('placeholder.cjs');

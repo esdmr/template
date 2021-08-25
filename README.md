@@ -12,8 +12,10 @@
 [node]: https://nodejs.org/en/download/current
 [pnpm]: https://pnpm.io
 
+<!-- #region placeholder DESCRIPTION -->
 This is a template for TypeScript projects.
 Further information at [the wiki](https://github.com/esdmr/template/wiki).
+<!-- #endregion placeholder -->
 
 ## Install as a dependency
 
@@ -47,27 +49,29 @@ pnpm install
 pnpm run build
 ```
 
-## Online documentation
+<!-- #region placeholder delete -->
+## Overview
+
+This package provides a greet function which allows generating greeting messages
+for any person, or alternatively for the “World”.
+
+See the examples at [the `examples` directory](examples).
+
+<!-- #endregion placeholder -->
+## Documentation
 
 Available at [the GitHub Pages](https://esdmr.github.io/template/).
 
-## Building the documentation locally
-
-The following snippet will build the documentation at `build/docs/`:
-
-```sh
-pnpm run api
-```
-
+<!-- #region placeholder keep -->
 ## Template
 
-This project was created with the [`esdmr/template`][template] project. See
-[its wiki][template-wiki]
-on how to contribute to this project.
+This project generated from [`esdmr/template`][template]. See
+[its wiki][template-wiki] on how to contribute to this project.
 
 [template]: https://github.com/esdmr/template
 [template-wiki]: https://github.com/esdmr/template/wiki
 
+<!-- #endregion placeholder -->
 ## License
 
 See [License][license].

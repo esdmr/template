@@ -12,6 +12,11 @@ const rl = readline.createInterface({
 const README_DESCRIPTION = `This is a template for TypeScript projects.
 Further information at [the wiki](https://github.com/esdmr/template/wiki).`;
 
+const README_LINK_TEMPLATE = '[`esdmr/template`][template]';
+const README_LINK_WIKI = '[its wiki][template-wiki]';
+const README_LINK_LIST = `[template]: https://github.com/esdmr/template
+[template-wiki]: https://github.com/esdmr/template/wiki`;
+
 rl.once('SIGINT', () => {
 	console.log();
 	process.exit(1);
@@ -211,6 +216,9 @@ async function main () {
 
 	await patch('README.md', (text) => replaceCommon(text, {
 		[README_DESCRIPTION]: DESCRIPTION,
+		[README_LINK_TEMPLATE]: README_LINK_TEMPLATE,
+		[README_LINK_WIKI]: README_LINK_WIKI,
+		[README_LINK_LIST]: README_LINK_LIST,
 		'Template Project': PROJECT,
 	}));
 

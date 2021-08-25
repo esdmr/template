@@ -44,7 +44,7 @@ class StringMatcher {
 	constructor (text, matcher) {
 		this.text = text;
 		this.matcher = matcher;
-		this.keys = Object.keys(matcher);
+		this.keys = Object.keys(matcher).sort((a, b) => b.length - a.length);
 		this.index = 0;
 	}
 

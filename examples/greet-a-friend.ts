@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+/* eslint-disable */
 import greet from '@esdmr/template';
 
 const FRIEND_NAME = 'John doe';

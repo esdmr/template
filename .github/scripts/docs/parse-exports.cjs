@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const { readFile, writeFile } = require('node:fs/promises');
 const process = require('process');
-const hasColors = process.stderr.hasColors();
+const hasColors = process.stderr?.hasColors?.() ?? false;
 const isInGitHub = Boolean(process.env.GITHUB_ACTIONS);
 const logColor = hasColors ? '\x1B[94m' : '';
 const warnColor = isInGitHub ? '::warning::' : hasColors ? '\x1B[93m' : '';

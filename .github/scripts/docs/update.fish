@@ -69,7 +69,7 @@ begin
     group Add front-matter for every file
     assert pushd current/build/docs
 
-    for filename in **.md
+    for filename in (find . -name '*.md' -and -not -name 'index.md')
         sed -i "1i ---\\
 parent: $JOB_CURR_BRANCH\\
 ---" $filename
@@ -84,13 +84,14 @@ end
 
 begin
     group Create index for branch
+    assert pushd current/build/docs
     set -l nav_order 5
     set -q JOB_CURR_RELEASE
     and set nav_order (math "10 + $JOB_CURR_RELEASE")
     echo Page order is "$nav_order."
 
-    assert touch current/build/docs/index.md
-    assert mv current/build/docs/index.md current/build/docs/_index.md
+    assert touch index.md
+    assert mv index.md _index.md
 
     echo "---
 nav_order: $nav_order
@@ -100,10 +101,11 @@ has_children: true
 # $JOB_CURR_BRANCH
 
 From commit [$JOB_COMMIT_ORIGINAL_ID]($JOB_COMMIT_ORIGINAL_URL)
-" >current/build/docs/index.md
+" >index.md
 
-    cat current/build/docs/_index.md >>current/build/docs/index.md
+    cat _index.md >>index.md
     echo Wrote index.md
+    assert popd
     endgroup
 end
 

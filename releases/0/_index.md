@@ -1,6 +1,3 @@
----
-parent: releases/0
----
 ## Packages
 
 [Home](./index.md)

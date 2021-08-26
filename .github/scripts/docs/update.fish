@@ -89,6 +89,9 @@ begin
     and set nav_order (math "10 + $JOB_CURR_RELEASE")
     echo Page order is "$nav_order."
 
+    assert touch current/build/docs/index.md
+    assert mv current/build/docs/index.md current/build/docs/_index.md
+
     echo "---
 nav_order: $nav_order
 title: $JOB_CURR_BRANCH
@@ -96,7 +99,10 @@ has_children: true
 ---
 # $JOB_CURR_BRANCH
 
-From commit [$JOB_COMMIT_ORIGINAL_ID]($JOB_COMMIT_ORIGINAL_URL)" >current/build/docs/index.md
+From commit [$JOB_COMMIT_ORIGINAL_ID]($JOB_COMMIT_ORIGINAL_URL)
+" >current/build/docs/index.md
+
+    cat current/build/docs/_index.md >>current/build/docs/index.md
     echo Wrote index.md
     endgroup
 end

@@ -45,7 +45,13 @@ end
 function fail
     set -l command_status $status
     echo >&2 # Empty line
-    echo (set_color_fail FAIL) $argv >&2
+
+    if set -q GITHUB_ACTIONS
+        echo "::error::$argv" >&2
+    else
+        echo (set_color_fail FAIL) $argv >&2
+    end
+
     print-stack-trace >&2
 
     if test $command_status -eq 0
@@ -58,7 +64,13 @@ end
 function warn
     set -l command_status $status
     echo >&2 # Empty line
-    echo (set_color_warn WARN) $argv >&2
+
+    if set -q GITHUB_ACTIONS
+        echo "::warning::$argv" >&2
+    else
+        echo (set_color_warn WARN) $argv >&2
+    end
+
     echo >&2 # Empty line
 
     return $command_status

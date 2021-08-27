@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-const child = require('node:child_process');
-const process = require('node:process');
-const readline = require('node:readline');
-const fs = require('node:fs/promises');
+import child from 'node:child_process';
+import process from 'node:process';
+import readline from 'node:readline';
+import fs from 'node:fs/promises';
 
 const rl = readline.createInterface({
 	input: process.stdin,
@@ -11,11 +11,6 @@ const rl = readline.createInterface({
 
 rl.once('SIGINT', () => {
 	console.log();
-	process.exit(1);
-});
-
-main().catch((error) => {
-	console.error(error);
 	process.exit(1);
 });
 
@@ -103,6 +98,7 @@ class MarkdownMatcher {
 		this.reText = /[\s\S]((?!<!--)[\s\S])*/uy;
 		this.reRegion = /<!-- *#region placeholder (?<name>\w+) *-->\n/uy;
 		this.reEndRegion = /<!-- *#endregion placeholder *-->\n/uy;
+		/** @type {string[]} */
 		this.parts = [];
 		this.currentPart = '';
 		this.name = undefined;
@@ -270,79 +266,77 @@ async function patch (path, cb) {
 	await fs.writeFile(path, cb(await fs.readFile(path, 'utf8')), 'utf8');
 }
 
-async function main () {
-	const gitUserName = await spawn('git', ['config', '--get', 'user.name'], {});
-	const gitUserEmail = await spawn('git', ['config', '--get', 'user.email'], {});
-	const gitRemoteURL = await spawn('git', ['remote', 'get-url', 'origin'], {});
+const gitUserName = await spawn('git', ['config', '--get', 'user.name'], {});
+const gitUserEmail = await spawn('git', ['config', '--get', 'user.email'], {});
+const gitRemoteURL = await spawn('git', ['remote', 'get-url', 'origin'], {});
 
-	const match = gitRemoteURL.match(/github.com[/:](?<user>.*?)\/(?<repo>.*?)(\.git)?$/u);
+const match = gitRemoteURL.match(/github.com[/:](?<user>.*?)\/(?<repo>.*?)(\.git)?$/u);
 
-	const userDefault = match?.groups?.user ?? '';
-	const repoDefault = match?.groups?.repo ?? '';
-	const yearDefault = String(new Date().getUTCFullYear());
-	const tzDefault = new Intl.DateTimeFormat().resolvedOptions().timeZone ?? '';
+const userDefault = match?.groups?.user ?? '';
+const repoDefault = match?.groups?.repo ?? '';
+const yearDefault = String(new Date().getUTCFullYear());
+const tzDefault = new Intl.DateTimeFormat().resolvedOptions().timeZone ?? '';
 
-	const USER = await readParameter('(USER) Enter the GitHub username', userDefault);
-	const REPO = await readParameter('(REPO) Enter name of the new repository', repoDefault);
-	const PACKAGE = await readParameter('(PKG ) Enter name of the package', REPO);
+const USER = await readParameter('(USER) Enter the GitHub username', userDefault);
+const REPO = await readParameter('(REPO) Enter name of the new repository', repoDefault);
+const PACKAGE = await readParameter('(PKG ) Enter name of the package', REPO);
 
-	const projectDefault = PACKAGE
-		.replace(/^\w/, (match) => match.toUpperCase())
-		.replace(/-(\w)/g, ' $1');
+const projectDefault = PACKAGE
+	.replace(/^\w/, (match) => match.toUpperCase())
+	.replace(/-(\w)/g, ' $1');
 
-	const PROJECT = await readParameter('(PROJ) Enter human readable name of the project', projectDefault);
-	const DESCRIPTION = await readParameter('(DESC) Enter description of the repository');
-	const NAME = await readParameter('(NAME) Enter your name', gitUserName);
-	const EMAIL = await readParameter('(EMAIL) Enter your public email address', gitUserEmail);
-	const YEAR = await readParameter('(YEAR) Enter the current year', yearDefault);
-	const TIMEZONE = await readParameter('(TZ  ) Enter your IANA Time Zone', tzDefault);
+const PROJECT = await readParameter('(PROJ) Enter human readable name of the project', projectDefault);
+const DESCRIPTION = await readParameter('(DESC) Enter description of the repository');
+const NAME = await readParameter('(NAME) Enter your name', gitUserName);
+const EMAIL = await readParameter('(MAIL) Enter your public email address', gitUserEmail);
+const YEAR = await readParameter('(YEAR) Enter the current year', yearDefault);
+const TIMEZONE = await readParameter('(TZ  ) Enter your IANA Time Zone', tzDefault);
 
-	rl.close();
+rl.close();
 
-	const commonMatcher = {
-		'@esdmr/template': PACKAGE,
-		'esdmr0@gmail.com': EMAIL,
-		esdmr: USER,
-		template: REPO,
-		'Saeed M Rad': NAME,
-		2021: YEAR,
-	};
+const commonMatcher = {
+	'@esdmr/template': PACKAGE,
+	'esdmr0@gmail.com': EMAIL,
+	esdmr: USER,
+	template: REPO,
+	'Saeed M Rad': NAME,
+	2021: YEAR,
+};
 
-	/**
-	 * @param {string} text
-	 * @param {Record<string, string>} customMatcher
-	 * @returns {string}
-	 */
-	const replaceCommon = (text, customMatcher = {}) => StringMatcher.replaceAll(text, {
-		...customMatcher,
-		...commonMatcher,
-	});
+/**
+ * @param {string} text
+ * @param {Record<string, string>} customMatcher
+ * @returns {string}
+ */
+const replaceCommon = (text, customMatcher = {}) => StringMatcher.replaceAll(text, {
+	...customMatcher,
+	...commonMatcher,
+});
 
-	await patch('.github/pages-template/_includes/head_custom.html', replaceCommon);
-	await patch('.github/pages-template/_config.yml', replaceCommon);
-	await patch('CODE_OF_CONDUCT.md', replaceCommon);
-	await patch('LICENSE', replaceCommon);
+await patch('.github/pages-template/_includes/head_custom.html', replaceCommon);
+await patch('.github/pages-template/_config.yml', replaceCommon);
+await patch('CODE_OF_CONDUCT.md', replaceCommon);
+await patch('LICENSE', replaceCommon);
 
-	await patch('package.json', (text) => replaceCommon(text, {
-		'Template project': DESCRIPTION,
-		'  "private": true,\n': '',
-	}));
+await patch('package.json', (text) => replaceCommon(text, {
+	'Template project': DESCRIPTION,
+	'  "private": true,\n': '',
+}));
 
-	await patch('README.md', (text) => MarkdownMatcher.replaceAll(text, {
-		DESCRIPTION,
-	}, {
-		'Template Project': PROJECT,
-		...commonMatcher,
-	}));
+await patch('README.md', (text) => MarkdownMatcher.replaceAll(text, {
+	DESCRIPTION,
+}, {
+	'Template Project': PROJECT,
+	...commonMatcher,
+}));
 
-	await patch('renovate.json', (text) => text
-		.replace('Asia/Tehran', TIMEZONE));
+await patch('renovate.json', (text) => text
+	.replace('Asia/Tehran', TIMEZONE));
 
-	console.log('Clearing code');
-	await fs.writeFile('src/main.ts', '');
-	await fs.writeFile('test/main.ts', '');
-	await fs.unlink('examples/greet-a-friend.ts');
+console.log('Clearing code');
+await fs.writeFile('src/main.ts', '');
+await fs.writeFile('test/main.ts', '');
+await fs.unlink('examples/greet-a-friend.ts');
 
-	console.log('Deleting placeholder.cjs');
-	await fs.unlink('placeholder.cjs');
-}
+console.log('Deleting placeholder.js');
+await fs.unlink('scripts/placeholder.js');

@@ -1,0 +1,80 @@
+{"0": {
+    "doc": "greet() function",
+    "title": "greet() function",
+    "content": "Home &gt; @esdmr/template &gt; greet . “Greetings are nice things to say when people meet each other.” https://simple.wikipedia.org/wiki/Greeting . Signature: . export default function greet(whom?: string): string; . ",
+    "url": "https://esdmr.github.io/template/releases/0/esdmr.template.greet.html",
+    "relUrl": "/releases/0/esdmr.template.greet.html"
+  },"1": {
+    "doc": "greet() function",
+    "title": "Parameters",
+    "content": "| Parameter | Type | Description | . | whom | string | Whom to greet | . Returns: . string . ",
+    "url": "https://esdmr.github.io/template/releases/0/esdmr.template.greet.html#parameters",
+    "relUrl": "/releases/0/esdmr.template.greet.html#parameters"
+  },"2": {
+    "doc": "@esdmr/template package",
+    "title": "@esdmr/template package",
+    "content": "Home &gt; @esdmr/template . ",
+    "url": "https://esdmr.github.io/template/releases/0/esdmr.template.html",
+    "relUrl": "/releases/0/esdmr.template.html"
+  },"3": {
+    "doc": "@esdmr/template package",
+    "title": "Functions",
+    "content": "| Function | Description | . | greet(whom) | “Greetings are nice things to say when people meet each other.” https://simple.wikipedia.org/wiki/Greeting | . ",
+    "url": "https://esdmr.github.io/template/releases/0/esdmr.template.html#functions",
+    "relUrl": "/releases/0/esdmr.template.html#functions"
+  },"4": {
+    "doc": "releases/0",
+    "title": "releases/0",
+    "content": "From commit 92a73af85b4c12b3eff189b0c3e34eb7470f8ef7 . ",
+    "url": "https://esdmr.github.io/template/releases/0/",
+    "relUrl": "/releases/0/"
+  },"5": {
+    "doc": "releases/0",
+    "title": "Packages",
+    "content": "Home . | Package | . | @esdmr/template | . ",
+    "url": "https://esdmr.github.io/template/releases/0/#packages",
+    "relUrl": "/releases/0/#packages"
+  },"6": {
+    "doc": "Template Project",
+    "title": "Template Project",
+    "content": ". This is a template for TypeScript projects. Further information at the wiki. ",
+    "url": "https://esdmr.github.io/template/",
+    "relUrl": "/"
+  },"7": {
+    "doc": "Template Project",
+    "title": "Install as a dependency",
+    "content": "This project requires Node.JS version 16 minimum. Ensure that you have installed the correct version of Node.JS by running node --version. Any of the following snippets will install this project as a dependency: . npm install --save @esdmr/template # Or yarn add @esdmr/template # Or pnpm install @esdmr/template . ",
+    "url": "https://esdmr.github.io/template/#install-as-a-dependency",
+    "relUrl": "/#install-as-a-dependency"
+  },"8": {
+    "doc": "Template Project",
+    "title": "Install from source",
+    "content": "This project requires Node.JS version 16 minimum. Ensure that you have installed the correct version of Node.JS by running node --version. This project recommends pnpm version 6. Ensure that you have installed the correct version of pnpm by running pnpm --version. The following snippet will download, install, and build the source from GitHub: . git clone https://github.com/esdmr/template.git cd template pnpm install pnpm run build . ",
+    "url": "https://esdmr.github.io/template/#install-from-source",
+    "relUrl": "/#install-from-source"
+  },"9": {
+    "doc": "Template Project",
+    "title": "Overview",
+    "content": "This package provides a greet function which allows generating greeting messages for any person, or alternatively for the “World”. See the examples at the examples directory. ",
+    "url": "https://esdmr.github.io/template/#overview",
+    "relUrl": "/#overview"
+  },"10": {
+    "doc": "Template Project",
+    "title": "Documentation",
+    "content": "Available at the GitHub Pages. ",
+    "url": "https://esdmr.github.io/template/#documentation",
+    "relUrl": "/#documentation"
+  },"11": {
+    "doc": "Template Project",
+    "title": "Template",
+    "content": "This project generated from esdmr/template. See its wiki on how to contribute to this project. ",
+    "url": "https://esdmr.github.io/template/#template",
+    "relUrl": "/#template"
+  },"12": {
+    "doc": "Template Project",
+    "title": "License",
+    "content": "See License. ",
+    "url": "https://esdmr.github.io/template/#license",
+    "relUrl": "/#license"
+  }
+}

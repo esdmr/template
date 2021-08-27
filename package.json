@@ -20,12 +20,14 @@
   "files": [
     "build/**/*.js",
     "build/**/*.d.ts",
-    "!build/test/**/*",
+    "!build/api/**/*",
     "!build/docs/**/*",
-    "!build/api/**/*"
+    "!build/examples/**/*",
+    "!build/test/**/*"
   ],
   "scripts": {
     "build": "tsc -b",
+    "build:examples": "pnpm link . && tsc -b examples",
     "changeset": "changeset",
     "changeset:version": "changeset version",
     "clean": "rimraf build .nyc_output coverage",

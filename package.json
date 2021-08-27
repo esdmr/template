@@ -28,6 +28,7 @@
   "scripts": {
     "build": "tsc -b",
     "build:examples": "pnpm link . && tsc -b examples",
+    "build:update-paths": "node scripts/update-ts-paths.js",
     "changeset": "changeset",
     "changeset:version": "changeset version",
     "clean": "rimraf build .nyc_output coverage",
@@ -74,6 +75,13 @@
           }
         }
       }
+    }
+  },
+  "typesVersions": {
+    "*": {
+      ".": [
+        "build/main.d.ts"
+      ]
     }
   }
 }

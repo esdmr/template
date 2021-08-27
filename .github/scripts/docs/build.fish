@@ -21,7 +21,7 @@ echo '## Packages
 |Package|
 |---|' >build/docs/index.md
 
-set -l dts_files (assert find ./build -name '*.d.ts')
+set -l dts_files (assert find ./build -name test -prune -o -name '*.d.ts')
 set -l placeholder placeholder_package_name
 
 for line in (assert node (status dirname)/parse-exports.cjs $dts_files)

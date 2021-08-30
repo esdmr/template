@@ -42,11 +42,16 @@ function toRelative (path) {
 
 function getExportsObject (exports) {
 	if (!isObject(exports)) {
-		warn('"exports" field does not exists or is not an object.');
+		error('"exports" field does not exist or is not an object.');
 		return;
 	}
 
 	log('Package has conditional exports.');
+
+	if (exports.docs === null) {
+		warn('Package is exempted from documentation.');
+		return {};
+	}
 
 	if (typeof exports.types === 'string') {
 		log('Package does not use subpaths.');
@@ -67,12 +72,12 @@ function getExportsObject (exports) {
 	const entries = Object.entries(exports);
 
 	if (entries.length === 0) {
-		warn('The "exports" field is empty.');
+		error('The "exports" field is empty.');
 		return;
 	}
 
 	if (entries.some(([key]) => key !== '.' && !key.startsWith('./'))) {
-		warn('Package does not have any subpaths and the "types" field is missing.');
+		error('Package does not have any subpaths and the "types" field is missing.');
 		return;
 	}
 
@@ -80,19 +85,34 @@ function getExportsObject (exports) {
 	let exportsObject = {};
 
 	for (const [key, value] of entries) {
-		if (isObject(value) && typeof value.types === 'string') {
-			log('Subpath found:', key);
-
-			const relative = toRelative(value.types);
-
-			if (relative !== undefined) {
-				log('  ⟶ ', relative);
-
-				exportsObject[key] = relative;
-			}
-		} else {
-			warn('Subpath is not an object or does not have a "types" field:', key);
+		if (!isObject(value)) {
+			warn('Subpath is not an object:', key);
+			continue;
 		}
+
+		if (value.docs === null) {
+			log('Subpath is exempted from documentation:', key);
+			continue;
+		}
+
+		if (typeof value.types !== 'string') {
+			warn('Subpath does not have a "types" field:', key);
+			continue;
+		}
+
+		log('Subpath found:', key);
+
+		const relative = toRelative(value.types);
+
+		if (relative !== undefined) {
+			log('  ⟶ ', relative);
+
+			exportsObject[key] = relative;
+		}
+	}
+
+	if (Object.keys(exportsObject).length === 0) {
+		warn('No valid subpath found for documentation.');
 	}
 
 	return exportsObject;
@@ -100,7 +120,7 @@ function getExportsObject (exports) {
 
 function getTypesObject (types) {
 	if (typeof types !== 'string') {
-		warn('"types" field does not exists or is not a string.');
+		error('"types" field does not exist or is not a string.');
 		return;
 	}
 
@@ -130,13 +150,14 @@ async function main (argv) {
 
 	if (typeof json.name !== 'string') {
 		error('package.json has no name, or the name is not a string.');
+		return;
 	}
 
 	const name = json.name;
 	const exportsObject = getExportsObject(json.exports) ?? getTypesObject(json.types);
 
 	if (exportsObject === undefined) {
-		warn('No exported types found.');
+		error('No exported types found.');
 		return;
 	}
 

@@ -46,6 +46,10 @@ async function getMetadata () {
 	delete metadata.imports['#test/*'];
 	delete metadata.pnpm;
 
+	for (const subpath of Object.keys(metadata.exports ?? {})) {
+		delete metadata.exports[subpath].docs;
+	}
+
 	return metadata;
 }
 

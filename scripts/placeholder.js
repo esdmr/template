@@ -164,7 +164,7 @@ class MarkdownMatcher {
 				break;
 
 			default:
-				this.parts.push((this.vars[this.name] + '\n') ?? '');
+				this.parts.push((this.vars[this.name] ?? '') + '\n');
 		}
 
 		this.currentPart = '';

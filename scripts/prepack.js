@@ -53,7 +53,7 @@ async function getMetadata () {
 	return metadata;
 }
 
-const metadata = getMetadata();
+const metadata = await getMetadata();
 
 console.log('pnpm install');
 await spawn('pnpm', ['install']);

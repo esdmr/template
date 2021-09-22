@@ -44,6 +44,7 @@ async function getMetadata () {
 	delete metadata.devDependencies;
 	delete metadata.engines.pnpm;
 	delete metadata.imports['#test/*'];
+	delete metadata.packageManager;
 	delete metadata.pnpm;
 
 	for (const subpath of Object.keys(metadata.exports ?? {})) {

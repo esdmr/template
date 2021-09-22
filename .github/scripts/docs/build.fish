@@ -6,11 +6,6 @@ function escape_path
 end
 
 assert groupcmd pnpm i
-
-# Install api-extractor and api-documenter
-assert groupcmd pnpm i -D '@microsoft/api-extractor@7.18.6' \
-    '@microsoft/api-documenter@7.13.40'
-
 assert groupcmd pnpm run build
 assert groupcmd mkdir -p build/docs
 

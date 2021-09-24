@@ -10,7 +10,7 @@ specifiers:
   '@babel/eslint-parser': 7.15.7
   '@changesets/cli': 2.17.0
   '@istanbuljs/esm-loader-hook': 0.1.2
-  '@microsoft/api-documenter': 7.13.40
+  '@microsoft/api-documenter': 7.13.54
   '@microsoft/api-extractor': 7.18.6
   '@types/node': ^16.0.0
   '@types/tap': 15.0.5
@@ -23,7 +23,7 @@ devDependencies:
   '@babel/eslint-parser': 7.15.7
   '@changesets/cli': 2.17.0
   '@istanbuljs/esm-loader-hook': 0.1.2
-  '@microsoft/api-documenter': 7.13.40
+  '@microsoft/api-documenter': 7.13.54
   '@microsoft/api-extractor': 7.18.6
   '@types/node': 16.9.6
   '@types/tap': 15.0.5
@@ -632,14 +632,14 @@ packages:
       read-yaml-file: 1.1.0
     dev: true
 
-  /@microsoft/api-documenter/7.13.40:
-    resolution: {integrity: sha512-n7iEJJpXBL4k2GlTyXCy7IZ5lhdq4IYmec+1Remgsz9NVkg4BS9RLqwT/qTuarpKRNWrxSR3C/lImnyZSEwrjA==}
+  /@microsoft/api-documenter/7.13.54:
+    resolution: {integrity: sha512-Ar1e2xcQzGhl3W6z2I6a5cS+a5yXMbZP4cThzwrOR+Vc4rfgQnIQnuZWYPVKdU5UejCgLvUwc8LDMPisUleJQQ==}
     hasBin: true
     dependencies:
-      '@microsoft/api-extractor-model': 7.13.5
+      '@microsoft/api-extractor-model': 7.13.9
       '@microsoft/tsdoc': 0.13.2
-      '@rushstack/node-core-library': 3.40.0
-      '@rushstack/ts-command-line': 4.9.0
+      '@rushstack/node-core-library': 3.41.0
+      '@rushstack/ts-command-line': 4.9.1
       colors: 1.2.5
       js-yaml: 3.13.1
       resolve: 1.17.0
@@ -651,6 +651,14 @@ packages:
       '@microsoft/tsdoc': 0.13.2
       '@microsoft/tsdoc-config': 0.15.2
       '@rushstack/node-core-library': 3.40.0
+    dev: true
+
+  /@microsoft/api-extractor-model/7.13.9:
+    resolution: {integrity: sha512-t/XKTr8MlHRWgDr1fkyCzTQRR5XICf/WzIFs8yw1JLU8Olw99M3by4/dtpOZNskfqoW+J8NwOxovduU2csi4Ww==}
+    dependencies:
+      '@microsoft/tsdoc': 0.13.2
+      '@microsoft/tsdoc-config': 0.15.2
+      '@rushstack/node-core-library': 3.41.0
     dev: true
 
   /@microsoft/api-extractor/7.18.6:
@@ -719,6 +727,20 @@ packages:
       z-schema: 3.18.4
     dev: true
 
+  /@rushstack/node-core-library/3.41.0:
+    resolution: {integrity: sha512-JxdmqR+SHU04jTDaZhltMZL3/XTz2ZZM47DTN+FSPUGUVp6WmxLlvJnT5FoHrOZWUjL/FoIlZUdUPTSXjTjIcg==}
+    dependencies:
+      '@types/node': 16.9.6
+      colors: 1.2.5
+      fs-extra: 7.0.1
+      import-lazy: 4.0.0
+      jju: 1.4.0
+      resolve: 1.17.0
+      semver: 7.3.5
+      timsort: 0.3.0
+      z-schema: 3.18.4
+    dev: true
+
   /@rushstack/rig-package/0.2.13:
     resolution: {integrity: sha512-qQMAFKvfb2ooaWU9DrGIK9d8QfyHy/HiuITJbWenlKgzcDXQvQgEduk57YF4Y7LLasDJ5ZzLaaXwlfX8qCRe5Q==}
     dependencies:
@@ -728,6 +750,15 @@ packages:
 
   /@rushstack/ts-command-line/4.9.0:
     resolution: {integrity: sha512-kmT8t+JfnvphISF1C5WwY56RefjwgajhSjs9J4ckvAFXZDXR6F5cvF5/RTh7fGCzIomg8esy2PHO/b52zFoZvA==}
+    dependencies:
+      '@types/argparse': 1.0.38
+      argparse: 1.0.10
+      colors: 1.2.5
+      string-argv: 0.3.1
+    dev: true
+
+  /@rushstack/ts-command-line/4.9.1:
+    resolution: {integrity: sha512-zzoWB6OqVbMjnxlxbAUqbZqDWITUSHqwFCx7JbH5CVrjR9kcsB4NeWkN1I8GcR92beiOGvO3yPlB2NRo5Ugh+A==}
     dependencies:
       '@types/argparse': 1.0.38
       argparse: 1.0.10

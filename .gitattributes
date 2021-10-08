@@ -200,3 +200,10 @@ Procfile          text
 
 # Ignore files (like .npmignore or .gitignore)
 *.*ignore         text
+
+# Project specific
+tap-snapshots/**  linguist-generated
+pnpm-lock.yaml    linguist-generated
+.changeset/**     linguist-documentation
+.github/**        linguist-documentation
+scripts/**.js     linguist-language=ts

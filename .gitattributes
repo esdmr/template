@@ -207,3 +207,5 @@ pnpm-lock.yaml    linguist-generated
 .changeset/**     linguist-documentation
 .github/**        linguist-documentation
 scripts/**.js     linguist-language=ts
+scripts/**.mjs    linguist-language=ts
+scripts/**.cjs    linguist-language=ts

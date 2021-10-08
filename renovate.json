@@ -66,6 +66,14 @@
       "allowedVersions": "^16.0.0"
     },
     {
+      "description": "node: prefixes are only supported in version 16 of @types/node",
+      "matchPackageNames": [
+        "@microsoft/api-documenter",
+        "@microsoft/api-extractor"
+      ],
+      "enabled": false
+    },
+    {
       "matchUpdateTypes": [
         "minor",
         "patch",

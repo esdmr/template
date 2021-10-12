@@ -65,7 +65,7 @@ Available at [the GitHub Pages](https://esdmr.github.io/template/).
 <!-- #region placeholder keep -->
 ## Template
 
-This project generated from [`esdmr/template`][template]. See
+This project is generated from [`esdmr/template`][template]. See
 [its wiki][template-wiki] on how to contribute to this project.
 
 [template]: https://github.com/esdmr/template

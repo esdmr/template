@@ -23,101 +23,53 @@
     "object-curly-newline": [
       "error",
       {
-        "ObjectExpression": { "multiline": true, "minProperties": 1 },
-        "ObjectPattern": { "multiline": true },
+        "ObjectExpression": {
+          "multiline": true,
+          "minProperties": 1
+        },
+        "ObjectPattern": {
+          "multiline": true
+        },
         "ImportDeclaration": "never",
-        "ExportDeclaration": { "multiline": true, "minProperties": 3 }
+        "ExportDeclaration": {
+          "multiline": true,
+          "minProperties": 3
+        }
       }
+    ],
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "space-before-function-paren": [
+      "error",
+      "always"
     ]
   },
   "overrides": [
     {
       "files": "**.ts",
-      "rules": {
-        "@typescript-eslint/ban-types": [
-          "error",
-          {
-            "extendDefaults": false,
-            "types": {
-              "String": {
-                "message": "Use `string` instead.",
-                "fixWith": "string"
-              },
-              "Number": {
-                "message": "Use `number` instead.",
-                "fixWith": "number"
-              },
-              "Boolean": {
-                "message": "Use `boolean` instead.",
-                "fixWith": "boolean"
-              },
-              "Symbol": {
-                "message": "Use `symbol` instead.",
-                "fixWith": "symbol"
-              },
-              "Object": {
-                "message": "The `Object` type is mostly the same as `unknown`. You probably want `Record<string, unknown>` instead. See https://github.com/typescript-eslint/typescript-eslint/pull/848",
-                "fixWith": "Record<string, unknown>"
-              },
-              "{}": {
-                "message": "The `{}` type is mostly the same as `unknown`. You probably want `Record<string, unknown>` instead.",
-                "fixWith": "Record<string, unknown>"
-              },
-              "object": {
-                "message": "The `object` type is hard to use. Use `Record<string, unknown>` instead. See: https://github.com/typescript-eslint/typescript-eslint/pull/848",
-                "fixWith": "Record<string, unknown>"
-              },
-              "Function": "Use a specific function type instead, like `() => void`."
-            }
-          }
-        ],
-        "@typescript-eslint/comma-dangle": [
-          "error",
-          "always-multiline"
-        ],
-        "@typescript-eslint/object-curly-spacing": [
-          "error",
-          "always"
-        ],
-        "@typescript-eslint/space-before-function-paren": [
-          "error",
-          "always"
-        ]
-      }
+      "extends": "./.xo-config.ts.json"
     },
     {
-      "files": "**.js",
+      "files": "**.tsx",
+      "extends": "./.xo-config.ts.json"
+    },
+    {
+      "files": "**.mts",
+      "extends": "./.xo-config.ts.json"
+    },
+    {
+      "files": "**.cts",
+      "extends": "./.xo-config.ts.json",
       "rules": {
-        "comma-dangle": [
-          "error",
-          "always-multiline"
-        ],
-        "object-curly-spacing": [
-          "error",
-          "always"
-        ],
-        "space-before-function-paren": [
-          "error",
-          "always"
-        ]
+        "unicorn/prefer-module": "off"
       }
     },
     {
       "files": "**.cjs",
       "rules": {
-        "unicorn/prefer-module": "off",
-        "comma-dangle": [
-          "error",
-          "always-multiline"
-        ],
-        "object-curly-spacing": [
-          "error",
-          "always"
-        ],
-        "space-before-function-paren": [
-          "error",
-          "always"
-        ]
+        "unicorn/prefer-module": "off"
       }
     }
   ]

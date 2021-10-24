@@ -200,21 +200,25 @@ class MarkdownMatcher {
 }
 
 /**
+ * @param {string} code
  * @param {string} message
  * @param {string} defaultValue
  * @returns {Promise<string>}
  */
-async function readParameter (message, defaultValue = '') {
+async function readParameter (code, message, defaultValue = '') {
+	const paddedCode = code.slice(0, 4).padEnd(4).toUpperCase();
 	const prompt = defaultValue ? ` (${defaultValue})` : '';
+	const fullMessage = `(${paddedCode}) ${message}${prompt}: `;
+	const warnPadding = ' '.repeat(7);
 
 	return new Promise((resolve) => {
-		const ask = () => rl.question(`${message}${prompt}: `, (answer) => {
+		const ask = () => rl.question(fullMessage, (answer) => {
 			answer ||= defaultValue;
 
 			if (answer) {
 				resolve(answer);
 			} else {
-				console.warn('\n       This field is required.');
+				console.warn(`\n${warnPadding}This field is required.`);
 				ask();
 			}
 		});
@@ -280,20 +284,20 @@ const repoDefault = match?.groups?.repo ?? '';
 const yearDefault = String(new Date().getUTCFullYear());
 const tzDefault = new Intl.DateTimeFormat().resolvedOptions().timeZone ?? '';
 
-const USER = await readParameter('(USER) Enter the GitHub username', userDefault);
-const REPO = await readParameter('(REPO) Enter name of the new repository', repoDefault);
-const PACKAGE = await readParameter('(PKG ) Enter name of the package', REPO);
+const USER = await readParameter('USER', 'Enter the GitHub username', userDefault);
+const REPO = await readParameter('REPO', 'Enter name of the new repository', repoDefault);
+const PACKAGE = await readParameter('PKG', 'Enter name of the package', REPO);
 
 const projectDefault = PACKAGE
 	.replace(/^\w/, (match) => match.toUpperCase())
 	.replace(/-(\w)/g, ' $1');
 
-const PROJECT = await readParameter('(PROJ) Enter human readable name of the project', projectDefault);
-const DESCRIPTION = await readParameter('(DESC) Enter description of the repository');
-const NAME = await readParameter('(NAME) Enter your name', gitUserName);
-const EMAIL = await readParameter('(MAIL) Enter your public email address', gitUserEmail);
-const YEAR = await readParameter('(YEAR) Enter the current year', yearDefault);
-const TIMEZONE = await readParameter('(TZ  ) Enter your IANA Time Zone', tzDefault);
+const PROJECT = await readParameter('PROJ', 'Enter human readable name of the project', projectDefault);
+const DESCRIPTION = await readParameter('DESC', 'Enter description of the repository');
+const NAME = await readParameter('NAME', 'Enter your name', gitUserName);
+const EMAIL = await readParameter('MAIL', 'Enter your public email address', gitUserEmail);
+const YEAR = await readParameter('YEAR', 'Enter the current year', yearDefault);
+const TIMEZONE = await readParameter('TZ', 'Enter your IANA Time Zone', tzDefault);
 
 rl.close();
 

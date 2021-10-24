@@ -207,16 +207,19 @@ class MarkdownMatcher {
 async function readParameter (message, defaultValue = '') {
 	const prompt = defaultValue ? ` (${defaultValue})` : '';
 
-	return new Promise((resolve, reject) => {
-		rl.question(`${message}${prompt}: `, (answer) => {
+	return new Promise((resolve) => {
+		const ask = () => rl.question(`${message}${prompt}: `, (answer) => {
 			answer ||= defaultValue;
 
 			if (answer) {
 				resolve(answer);
 			} else {
-				reject(new Error('Answer not provided.'));
+				console.warn('\n       This field is required.');
+				ask();
 			}
 		});
+
+		ask();
 	});
 }
 

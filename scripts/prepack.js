@@ -59,11 +59,11 @@ const metadata = await getMetadata();
 console.log('pnpm install');
 await spawn('pnpm', ['install']);
 
-console.log('pnpm run lint');
-await spawn('pnpm', ['run', 'lint']);
-
 console.log('pnpm run build');
 await spawn('pnpm', ['run', 'build']);
+
+console.log('pnpm run lint');
+await spawn('pnpm', ['run', 'lint']);
 
 console.log('pnpm run test');
 await spawn('pnpm', ['run', 'test']);

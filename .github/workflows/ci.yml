@@ -56,10 +56,10 @@ jobs:
         run: pnpm run lint
 
       - name: Run tests
-        run: pnpm run test:coverage -- --no-check-coverage
+        run: pnpm run test:coverage
 
       - name: Export coverage report
-        run: pnpm run test:coverage-lcov -- --no-check-coverage
+        run: pnpm run test:coverage-lcov
 
       - name: Upload report to CodeCov
         uses: codecov/codecov-action@v2

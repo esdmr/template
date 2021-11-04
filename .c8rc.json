@@ -1,0 +1,10 @@
+{
+  "src": [
+    "build"
+  ],
+  "all": true,
+  "clean": true,
+  "exclude": [
+    "build/test"
+  ]
+}

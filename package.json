@@ -77,6 +77,16 @@
             "optional": true
           }
         }
+      },
+      "@babel/eslint-parser": {
+        "peerDependenciesMeta": {
+          "@babel/core": {
+            "optional": true
+          },
+          "eslint": {
+            "optional": true
+          }
+        }
       }
     }
   },

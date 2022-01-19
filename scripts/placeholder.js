@@ -277,7 +277,7 @@ const gitUserName = await spawn('git', ['config', '--get', 'user.name'], {});
 const gitUserEmail = await spawn('git', ['config', '--get', 'user.email'], {});
 const gitRemoteURL = await spawn('git', ['remote', 'get-url', 'origin'], {});
 
-const match = gitRemoteURL.match(/github.com[/:](?<user>.*?)\/(?<repo>.*?)(\.git)?$/u);
+const match = gitRemoteURL.match(/github\.com[/:](?<user>.*?)\/(?<repo>.*?)(\.git)?$/u);
 
 const userDefault = match?.groups?.user ?? '';
 const repoDefault = match?.groups?.repo ?? '';

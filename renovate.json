@@ -1,7 +1,9 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base"
+    "config:js-lib",
+    "helpers:pinGitHubActionDigests",
+    ":ignoreUnstable"
   ],
   "constraints": {
     "pnpm": "6"
@@ -17,6 +19,9 @@
   },
   "npm": {
     "stabilityDays": 3
+  },
+  "github-actions": {
+    "automerge": false
   },
   "timezone": "Asia/Tehran",
   "packageRules": [
@@ -66,7 +71,6 @@
       "allowedVersions": "^16.0.0"
     },
     {
-      "description": "node: prefixes are only supported in version 16 of @types/node",
       "matchPackageNames": [
         "@microsoft/api-documenter",
         "@microsoft/api-extractor"
@@ -93,13 +97,7 @@
         "major",
         "minor"
       ],
-      "dependencyDashboardApproval": true
-    },
-    {
-      "matchManagers": [
-        "github-actions"
-      ],
-      "dependencyDashboardApproval": true
+      "automerge": false
     }
   ]
 }

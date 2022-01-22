@@ -34,15 +34,15 @@ jobs:
     steps:
       # Setup
       - name: Install fish
-        uses: fish-actions/install-fish@029690efff3252f04a50f881453d4571e3409b6e
+        uses: fish-actions/install-fish@d6d9d26231a15f8d9a6b3e74b3db45512440e3e8 # renovate: tag=v1.1.0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@1f8c6b94b26d0feae1e387ca63ccbdc44d27b561 # renovate: tag=v2
         with:
           node-version: ${{ env.JOB_NODE_VERSION }}
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@bcad811784fb09d282bb1a9a98dfc18f758fbd9e
+        uses: pnpm/action-setup@646cdf48217256a3d0b80361c5a50727664284f2 # renovate: tag=v2.0.1
         with:
           version: ${{ env.JOB_PNPM_VERSION }}
 
@@ -64,7 +64,7 @@ jobs:
 
       # Checkout
       - name: Create documentation branch if non-existent
-        uses: esdmr/action-create-branch@cde5be66dae4dc5547ba71e1cdf8522708eba723
+        uses: esdmr/action-create-branch@cde5be66dae4dc5547ba71e1cdf8522708eba723 # renovate: tag=v2.1.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -82,13 +82,13 @@ jobs:
 
       # Setup after checkout:
       - name: Cache pnpm modules
-        uses: actions/cache@v2
+        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # renovate: tag=v2
         with:
           path: ~/.pnpm-store/current/
           key: ${{ runner.OS }}-pnpm-current-${{ hashFiles('current/pnpm-lock.yaml') }}
 
       - name: Cache pnpm modules for template libraries
-        uses: actions/cache@v2
+        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # renovate: tag=v2
         with:
           path: ~/.pnpm-store/docs/
           key: ${{ runner.OS }}-pnpm-docs-${{ hashFiles('master/.github/pages-template/**/pnpm-lock.yaml') }}
@@ -100,7 +100,7 @@ jobs:
       # Deploy
       - name: Check for a concurrenct workflow
         id: skip_check
-        uses: fkirc/skip-duplicate-actions@5c9412dad1a25ec714d6a628f2e8d11c700d9c03
+        uses: fkirc/skip-duplicate-actions@f75dd6564bb646f95277dc8c3b80612e46a4a1ea # renovate: tag=v3.4.1
         with:
           cancel_others: true
           skip_after_successful_duplicate: false
@@ -108,7 +108,7 @@ jobs:
 
       - name: Check GitHub Pages status
         if: success() && steps.skip_check.outputs.should_skip != 'true'
-        uses: crazy-max/ghaction-github-status@9b36a0224da450ffd12b5845caf5daee65c248fc
+        uses: crazy-max/ghaction-github-status@4cbc955e79062f29eacbd60fb9bdd4a888b7853a # renovate: tag=v2.2.0
         with:
           pages_threshold: major_outage
 
@@ -121,7 +121,7 @@ jobs:
 
       - name: Setup Ruby
         if: success() && steps.skip_check.outputs.should_skip != 'true'
-        uses: ruby/setup-ruby@a6f22865941e122a37e097fbded3dd0b54c39207
+        uses: ruby/setup-ruby@8f312efe1262fb463d906e9bf040319394c18d3e # renovate: tag=v1.92.0
         with:
           working-directory: docs
           ruby-version: ${{ env.JOB_RUBY_VERSION }}
@@ -134,7 +134,7 @@ jobs:
 
       - name: Deploy to GitHub Pages
         if: success() && steps.skip_check.outputs.should_skip != 'true'
-        uses: crazy-max/ghaction-github-pages@8e7a38741f9cdbd9b6c87b43cdc405706dbed1ed
+        uses: crazy-max/ghaction-github-pages@a117e4aa1fb4854d021546d2abdfac95be568a3a # renovate: tag=v2.6.0
         with:
           target_branch: gh-pages
           build_dir: docs/_site

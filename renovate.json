@@ -31,13 +31,11 @@
     "addLabels": [
       "renovate/lockfile"
     ],
+    "schedule": "* 12 * * 4",
     "automerge": true
   },
   "npm": {
     "stabilityDays": 3
-  },
-  "github-actions": {
-    "automerge": false
   },
   "timezone": "Asia/Tehran",
   "packageRules": [
@@ -104,6 +102,13 @@
       "matchUpdateTypes": [
         "minor"
       ],
+      "automerge": false
+    },
+    {
+      "matchManagers": [
+        "github-actions"
+      ],
+      "schedule": "* 12 * * 4",
       "automerge": false
     }
   ]

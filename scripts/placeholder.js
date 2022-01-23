@@ -338,6 +338,7 @@ await patch('README.md', (text) => MarkdownMatcher.replaceAll(text, {
 }));
 
 await patch('renovate.json', (text) => text
+	.replace(/,\s*"schedule":\s*".+?"/g, '')
 	.replace('Asia/Tehran', TIMEZONE));
 
 console.log('Clearing code');

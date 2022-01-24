@@ -6,12 +6,14 @@ on:
       - master
       - releases/**
     paths:
+      - ".github/workflows/lint-fish.yml"
       - "**.fish"
   pull_request:
     branches:
       - master
       - releases/**
     paths:
+      - ".github/workflows/lint-fish.yml"
       - "**.fish"
 
 defaults:

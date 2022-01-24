@@ -6,13 +6,13 @@ on:
       - master
       - releases/**
     paths:
-      - '**.fish'
+      - "**.fish"
   pull_request:
     branches:
       - master
       - releases/**
     paths:
-      - '**.fish'
+      - "**.fish"
 
 defaults:
   run:

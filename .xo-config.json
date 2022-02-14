@@ -44,6 +44,9 @@
     "space-before-function-paren": [
       "error",
       "always"
+    ],
+    "unicorn/prefer-json-parse-buffer": [
+      "off"
     ]
   },
   "overrides": [

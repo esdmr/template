@@ -35,7 +35,7 @@
     "automerge": true
   },
   "npm": {
-    "stabilityDays": 3
+    "stabilityDays": 21
   },
   "timezone": "Asia/Tehran",
   "packageRules": [

@@ -1,17 +1,8 @@
 #!/usr/bin/env node
 
 import fs from 'node:fs/promises';
-import { posix } from 'node:path';
-
-/**
- * @param {boolean} condition
- * @returns {asserts condition}
- */
-function assert (condition) {
-	if (!condition) {
-		throw new Error('Assertion failed');
-	}
-}
+import path from 'node:path/posix';
+import assert from 'node:assert/strict';
 
 /**
  * @param {string} path
@@ -63,16 +54,16 @@ const configPaths = [
 	['test/tsconfig.json', testImports],
 ];
 
-await Promise.all(configPaths.map(async ([path, imports]) => {
-	const json = await loadJSON(path);
+await Promise.all(configPaths.map(async ([configPath, imports]) => {
+	const json = await loadJSON(configPath);
 
 	imports = {
 		...imports,
 	};
 
 	for (const [key, value] of Object.entries(imports)) {
-		imports[key] = value.map((item) => posix.relative(
-			posix.resolve(posix.dirname(path)),
+		imports[key] = value.map((item) => path.relative(
+			path.resolve(path.dirname(configPath)),
 			item,
 		));
 	}
@@ -81,7 +72,7 @@ await Promise.all(configPaths.map(async ([path, imports]) => {
 	assert(json.compilerOptions instanceof Object);
 	json.compilerOptions.paths = imports;
 
-	await storeJSON(path, json);
+	await storeJSON(configPath, json);
 }));
 
 /** @type {[string, { types: string }][]} */

@@ -14,15 +14,6 @@ rl.once('SIGINT', () => {
 	process.exit(130);
 });
 
-/**
- * @template {unknown[]} T
- * @param {T} args
- * @returns {T}
-*/
-function tuple (...args) {
-	return args;
-}
-
 class StringMatcher {
 	/**
 	 * @param {string} text
@@ -44,9 +35,12 @@ class StringMatcher {
 
 	matchNext () {
 		return this.keys
-			.map((key) => tuple(key, this.text.indexOf(key, this.index)))
-			.filter(([_, index]) => index !== -1)
-			.sort((a, b) => a[1] - b[1])[0];
+			.map((key) => ({
+				key,
+				index: this.text.indexOf(key, this.index),
+			}))
+			.filter(({ index }) => index !== -1)
+			.sort((a, b) => a.index - b.index)[0];
 	}
 
 	replaceNext () {
@@ -56,7 +50,7 @@ class StringMatcher {
 			return false;
 		}
 
-		const [key, index] = match;
+		const { key, index } = match;
 		const value = this.matcher[key];
 		const endIndex = index + key.length;
 

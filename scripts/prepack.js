@@ -1,40 +1,6 @@
 #!/usr/bin/env node
-import child from 'node:child_process';
 import fs from 'node:fs/promises';
-
-/**
- * @param {string} command
- * @param {string[]} args
- * @returns {Promise<void>}
- */
-async function spawn (command, args) {
-	return new Promise((resolve, reject) => {
-		const process = child.spawn(command, args, {
-			stdio: 'inherit',
-		});
-
-		let done = false;
-
-		process.once('error', (error) => {
-			if (!done) {
-				reject(error);
-				done = true;
-			}
-		});
-
-		process.once('exit', (code) => {
-			if (!done) {
-				if (code) {
-					reject(new Error(`Process failed with error code: ${code}`));
-				} else {
-					resolve();
-				}
-
-				done = true;
-			}
-		});
-	});
-}
+import { execaCommand } from 'execa';
 
 async function getMetadata () {
 	const metadata = JSON.parse(await fs.readFile('package.json', 'utf8'));
@@ -56,17 +22,22 @@ async function getMetadata () {
 
 const metadata = await getMetadata();
 
+/** @type {import('execa').Options} */
+const options = {
+	stdio: 'inherit',
+};
+
 console.log('pnpm install');
-await spawn('pnpm', ['install']);
+await execaCommand('pnpm install', options);
 
 console.log('pnpm run build');
-await spawn('pnpm', ['run', 'build']);
+await execaCommand('pnpm run build', options);
 
 console.log('pnpm run lint');
-await spawn('pnpm', ['run', 'lint']);
+await execaCommand('pnpm run lint', options);
 
 console.log('pnpm run test');
-await spawn('pnpm', ['run', 'test']);
+await execaCommand('pnpm run test', options);
 
 console.log('mv package.json …');
 await fs.rename('package.json', '.package.dev.json');

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-import child from 'node:child_process';
 import process from 'node:process';
 import readline from 'node:readline';
 import fs from 'node:fs/promises';
+import { execaCommand } from 'execa';
 
 const rl = readline.createInterface({
 	input: process.stdin,
@@ -11,17 +11,8 @@ const rl = readline.createInterface({
 
 rl.once('SIGINT', () => {
 	console.log();
-	process.exit(1);
+	process.exit(130);
 });
-
-/**
- * @template {unknown[]} T
- * @param {T} args
- * @returns {T}
-*/
-function tuple (...args) {
-	return args;
-}
 
 class StringMatcher {
 	/**
@@ -44,9 +35,12 @@ class StringMatcher {
 
 	matchNext () {
 		return this.keys
-			.map((key) => tuple(key, this.text.indexOf(key, this.index)))
-			.filter(([_, index]) => index !== -1)
-			.sort((a, b) => a[1] - b[1])[0];
+			.map((key) => ({
+				key,
+				index: this.text.indexOf(key, this.index),
+			}))
+			.filter(({ index }) => index !== -1)
+			.sort((a, b) => a.index - b.index)[0];
 	}
 
 	replaceNext () {
@@ -56,7 +50,7 @@ class StringMatcher {
 			return false;
 		}
 
-		const [key, index] = match;
+		const { key, index } = match;
 		const value = this.matcher[key];
 		const endIndex = index + key.length;
 
@@ -110,43 +104,6 @@ async function readParameter (code, message, defaultValue = '') {
 }
 
 /**
- * @param {Parameters<typeof child.spawn>} args
- * @returns {Promise<string>}
- */
-async function spawn (...args) {
-	return new Promise((resolve, reject) => {
-		const process = child.spawn(...args);
-		let done = false;
-		let stdout = '';
-
-		process.stdout?.on('data', (data) => {
-			if (!done) {
-				stdout += data.toString();
-			}
-		});
-
-		process.once('error', (error) => {
-			if (!done) {
-				reject(error);
-				done = true;
-			}
-		});
-
-		process.once('exit', (code) => {
-			if (!done) {
-				if (code) {
-					reject(new Error(`Process failed with error code: ${code}`));
-				} else {
-					resolve(stdout.trim());
-				}
-
-				done = true;
-			}
-		});
-	});
-}
-
-/**
  * @param {string} path
  * @param {(text: string) => string} cb
  */
@@ -155,9 +112,9 @@ async function patch (path, cb) {
 	await fs.writeFile(path, cb(await fs.readFile(path, 'utf8')), 'utf8');
 }
 
-const gitUserName = await spawn('git', ['config', '--get', 'user.name'], {});
-const gitUserEmail = await spawn('git', ['config', '--get', 'user.email'], {});
-const gitRemoteURL = await spawn('git', ['remote', 'get-url', 'origin'], {});
+const { stdout: gitUserName } = await execaCommand('git config --get user.name');
+const { stdout: gitUserEmail } = await execaCommand('git config --get user.email');
+const { stdout: gitRemoteURL } = await execaCommand('git remote get-url origin');
 
 const match = gitRemoteURL.match(/github\.com[/:](?<user>.*?)\/(?<repo>.*?)(\.git)?$/u);
 

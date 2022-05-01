@@ -1,60 +1,106 @@
 #!/usr/bin/env node
-const { readFile, writeFile } = require('node:fs/promises');
-const process = require('process');
-const hasColors = process.stderr?.hasColors?.() ?? false;
-const isInGitHub = Boolean(process.env.GITHUB_ACTIONS);
-const logColor = hasColors ? '\x1B[94m' : '';
-const warnColor = isInGitHub ? '::warning::' : hasColors ? '\x1B[93m' : '';
-const errorColor = isInGitHub ? '::error::' : hasColors ? '\x1B[91m' : '';
-const resetColor = hasColors ? '\x1B[m' : '';
+const fs = require('node:fs');
+const process = require('node:process');
+const utils = require('../utils.cjs');
 
-main(process.argv.slice(2)).catch((error) => {
-	console.error(error);
+const argv = process.argv.slice(2);
+
+try {
+	const json = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+
+	if (!utils.isObject(json)) {
+		throw new TypeError('package.json is not an object or is null');
+	}
+
+	if (typeof json.name !== 'string') {
+		throw new Error('package.json has no name, or the name is not a string');
+	}
+
+	const name = json.name;
+	const exportsObject = getExportsObject(json.exports) ?? getTypesObject(json.types);
+
+	if (exportsObject === undefined) {
+		throw new Error('No exported types found.');
+	}
+
+	/** @type {Map<string, string[]>} */
+	const matches = new Map(argv.map((path) => [path, []]));
+
+	for (let [key, value] of Object.entries(exportsObject)) {
+		utils.log('New subpath:', key, '→', value);
+		let isMapped = key.includes('/*');
+
+		if (isMapped && !value.includes('/*')) {
+			utils.warn('Pattern is mapped but its value is not.');
+			key = key.replace('/*', '/index');
+			isMapped = false;
+		}
+
+		const keyBeginning = isMapped ? key.slice(0, key.indexOf('/*')) : key;
+		const keyEnding = isMapped ? key.slice(key.indexOf('/*') + 2) : '';
+		const beginning = isMapped ? value.slice(0, value.indexOf('/*')) : value;
+		const ending = isMapped ? value.slice(value.indexOf('/*') + 2) : '';
+
+		utils.log('  Key parts:', keyBeginning, '→', keyEnding);
+		utils.log('  Value parts:', beginning, '→', ending);
+
+		for (const [path, matched] of matches) {
+			if (path.startsWith(beginning) && path.endsWith(ending)) {
+				utils.log('  Path matches:', path);
+				matched.push(name
+					+ keyBeginning.slice(1) // This removes the dot
+					+ path.slice(beginning.length, path.indexOf(ending))
+					+ keyEnding);
+			}
+		}
+	}
+
+	for (const [path, matched] of matches) {
+		if (matched.length === 0) {
+			utils.log('Path did not match:', path);
+		} else {
+			matched.sort((a, b) => a.length - b.length);
+			utils.log(`${matched[0]}\t${path}`);
+		}
+	}
+
+	// This overwrites the `package.json`. If you are running this script
+	// locally, make sure to `git reset` it afterwards.
+	json.name = 'placeholder_package_name';
+	fs.writeFileSync('package.json', JSON.stringify(json), 'utf8');
+} catch (error) {
+	utils.error(error);
 	process.exit(1);
-});
-
-function log (...args) {
-	console.warn(logColor + 'ℹ', ...args, resetColor);
-}
-
-function warn (...args) {
-	console.warn(warnColor + '⚠', ...args, resetColor);
-}
-
-function error (...args) {
-	console.error(errorColor + '✖', ...args, resetColor);
-}
-
-/** @return {value is Record<string, unknown>} */
-function isObject (value) {
-	return typeof value === 'object' && value !== null;
 }
 
 /** @param {string} path */
 function toRelative (path) {
 	if (path.startsWith('/') || path.startsWith('../')) {
-		error('Path must start with neither / nor ../:', path);
+		utils.error('Path must start with neither / nor ../:', path);
 		return;
 	}
 
 	return path.startsWith('./') ? path : `./${path}`;
 }
 
+/**
+ * @param {unknown} exports
+ */
 function getExportsObject (exports) {
-	if (!isObject(exports)) {
-		error('"exports" field does not exist or is not an object.');
+	if (!utils.isObject(exports)) {
+		utils.error('"exports" field does not exist or is not an object.');
 		return;
 	}
 
-	log('Package has conditional exports.');
+	utils.log('Package has conditional exports.');
 
 	if (exports.docs === null) {
-		warn('Package is exempted from documentation.');
+		utils.warn('Package is exempted from documentation.');
 		return {};
 	}
 
 	if (typeof exports.types === 'string') {
-		log('Package does not use subpaths.');
+		utils.log('Package does not use subpaths.');
 
 		const relative = toRelative(exports.types);
 
@@ -62,7 +108,7 @@ function getExportsObject (exports) {
 			return;
 		}
 
-		log('  ⟶ ', relative);
+		utils.log('  ⟶ ', relative);
 
 		return {
 			'.': relative,
@@ -72,136 +118,72 @@ function getExportsObject (exports) {
 	const entries = Object.entries(exports);
 
 	if (entries.length === 0) {
-		error('The "exports" field is empty.');
+		utils.error('The "exports" field is empty.');
 		return;
 	}
 
 	if (entries.some(([key]) => key !== '.' && !key.startsWith('./'))) {
-		error('Package does not have any subpaths and the "types" field is missing.');
+		utils.error('Package does not have any subpaths and the "types" field is missing.');
 		return;
 	}
 
 	/** @type {Record<string, string>} */
-	let exportsObject = {};
+	const exportsObject = {};
 
 	for (const [key, value] of entries) {
-		if (!isObject(value)) {
-			warn('Subpath is not an object:', key);
+		if (!utils.isObject(value)) {
+			utils.warn('Subpath is not an object:', key);
 			continue;
 		}
 
 		if (value.docs === null) {
-			log('Subpath is exempted from documentation:', key);
+			utils.log('Subpath is exempted from documentation:', key);
 			continue;
 		}
 
 		if (typeof value.types !== 'string') {
-			warn('Subpath does not have a "types" field:', key);
+			utils.warn('Subpath does not have a "types" field:', key);
 			continue;
 		}
 
-		log('Subpath found:', key);
+		utils.log('Subpath found:', key);
 
 		const relative = toRelative(value.types);
 
 		if (relative !== undefined) {
-			log('  ⟶ ', relative);
+			utils.log('  ⟶ ', relative);
 
 			exportsObject[key] = relative;
 		}
 	}
 
 	if (Object.keys(exportsObject).length === 0) {
-		warn('No valid subpath found for documentation.');
+		utils.warn('No valid subpath found for documentation.');
 	}
 
 	return exportsObject;
 }
 
+/**
+ * @param {unknown} types
+ */
 function getTypesObject (types) {
 	if (typeof types !== 'string') {
-		error('"types" field does not exist or is not a string.');
+		utils.error('"types" field does not exist or is not a string.');
 		return;
 	}
 
-	log('Global "types" field found.');
+	utils.log('Global "types" field found.');
 
-	let relative = toRelative(types);
+	const relative = toRelative(types);
 
 	if (relative === undefined) {
 		return;
 	}
 
-	log('  ⟶ ', relative);
+	utils.log('  ⟶ ', relative);
 
 	return {
 		'.': relative,
 	};
-}
-
-/** @param {string[]} argv */
-async function main (argv) {
-	const json = JSON.parse(await readFile('package.json', 'utf8'));
-
-	if (!isObject(json)) {
-		error('package.json is not an object or is null.');
-		return;
-	}
-
-	if (typeof json.name !== 'string') {
-		error('package.json has no name, or the name is not a string.');
-		return;
-	}
-
-	const name = json.name;
-	const exportsObject = getExportsObject(json.exports) ?? getTypesObject(json.types);
-
-	if (exportsObject === undefined) {
-		error('No exported types found.');
-		return;
-	}
-
-	/** @type {Map<string, string[]>} */
-	const matches = new Map(argv.map((path) => [path, []]));
-
-	for (let [key, value] of Object.entries(exportsObject)) {
-		log('New subpath:', key, '→', value);
-		let isMapped = key.includes('/*');
-
-		if (isMapped && !value.includes('/*')) {
-			warn('Pattern is mapped but its value is not.');
-			key = key.replace('/*', '/index');
-			isMapped = false;
-		}
-
-		let keyBegining = isMapped ? key.slice(0, key.indexOf('/*')) : key;
-		let keyEnding = isMapped ? key.slice(key.indexOf('/*') + 2) : '';
-		let begining = isMapped ? value.slice(0, value.indexOf('/*')) : value;
-		let ending = isMapped ? value.slice(value.indexOf('/*') + 2) : '';
-
-		log('  Key parts:', keyBegining, '→', keyEnding);
-		log('  Value parts:', begining, '→', ending);
-
-		for (const [path, matched] of matches) {
-			if (path.startsWith(begining) && path.endsWith(ending)) {
-				log('  Path matches:', path);
-				matched.push(name
-					+ keyBegining.slice(1) // This removes the dot
-					+ path.slice(begining.length, path.indexOf(ending))
-					+ keyEnding);
-			}
-		}
-	}
-
-	for (const [path, matched] of matches) {
-		if (matched.length === 0) {
-			log('Path did not match:', path);
-		} else {
-			matched.sort((a, b) => a.length - b.length);
-			console.log(`${matched[0]}\t${path}`);
-		}
-	}
-
-	json.name = 'placeholder_package_name';
-	await writeFile('package.json', JSON.stringify(json), 'utf8');
 }

@@ -17,7 +17,7 @@ try {
 	}
 
 	fs.writeFileSync('api-extractor.json', JSON.stringify(json), 'utf8');
-	utils.log('Updated api-extractor config.');
+	utils.log('Updated api-extractor config');
 } catch (error) {
 	utils.error(error);
 	process.exit(1);

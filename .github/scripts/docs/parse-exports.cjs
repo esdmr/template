@@ -20,7 +20,7 @@ try {
 	const exportsObject = getExportsObject(json.exports) ?? getTypesObject(json.types);
 
 	if (exportsObject === undefined) {
-		throw new Error('No exported types found.');
+		throw new Error('No exported types found');
 	}
 
 	/** @type {Map<string, string[]>} */
@@ -31,7 +31,7 @@ try {
 		let isMapped = key.includes('/*');
 
 		if (isMapped && !value.includes('/*')) {
-			utils.warn('Pattern is mapped but its value is not.');
+			utils.warn('Pattern is mapped but its value is not');
 			key = key.replace('/*', '/index');
 			isMapped = false;
 		}
@@ -88,19 +88,19 @@ function toRelative (path) {
  */
 function getExportsObject (exports) {
 	if (!utils.isObject(exports)) {
-		utils.error('"exports" field does not exist or is not an object.');
+		utils.error('"exports" field does not exist or is not an object');
 		return;
 	}
 
-	utils.log('Package has conditional exports.');
+	utils.log('Package has conditional exports');
 
 	if (exports.docs === null) {
-		utils.warn('Package is exempted from documentation.');
+		utils.warn('Package is exempted from documentation');
 		return {};
 	}
 
 	if (typeof exports.types === 'string') {
-		utils.log('Package does not use subpaths.');
+		utils.log('Package does not use subpaths');
 
 		const relative = toRelative(exports.types);
 
@@ -118,12 +118,12 @@ function getExportsObject (exports) {
 	const entries = Object.entries(exports);
 
 	if (entries.length === 0) {
-		utils.error('The "exports" field is empty.');
+		utils.error('The "exports" field is empty');
 		return;
 	}
 
 	if (entries.some(([key]) => key !== '.' && !key.startsWith('./'))) {
-		utils.error('Package does not have any subpaths and the "types" field is missing.');
+		utils.error('Package does not have any subpaths and the "types" field is missing');
 		return;
 	}
 
@@ -158,7 +158,7 @@ function getExportsObject (exports) {
 	}
 
 	if (Object.keys(exportsObject).length === 0) {
-		utils.warn('No valid subpath found for documentation.');
+		utils.warn('No valid subpath found for documentation');
 	}
 
 	return exportsObject;
@@ -169,11 +169,11 @@ function getExportsObject (exports) {
  */
 function getTypesObject (types) {
 	if (typeof types !== 'string') {
-		utils.error('"types" field does not exist or is not a string.');
+		utils.error('"types" field does not exist or is not a string');
 		return;
 	}
 
-	utils.log('Global "types" field found.');
+	utils.log('Global "types" field found');
 
 	const relative = toRelative(types);
 

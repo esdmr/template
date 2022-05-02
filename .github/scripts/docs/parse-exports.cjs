@@ -60,7 +60,7 @@ try {
 			utils.log('Path did not match:', path);
 		} else {
 			matched.sort((a, b) => a.length - b.length);
-			utils.log(`${matched[0]}\t${path}`);
+			console.log(`${matched[0]}\t${path}`);
 		}
 	}
 

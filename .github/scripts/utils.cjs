@@ -1,7 +1,7 @@
 const process = require('node:process');
 
 const isInGitHub = Boolean(process.env.GITHUB_ACTIONS);
-const hasColors = process.stderr?.hasColors() ?? false;
+const hasColors = process.stderr?.hasColors?.() ?? false;
 const logSymbol = hasColors ? '\x1B[94mℹ\x1B[m' : 'ℹ';
 const warnSymbol = isInGitHub ? '::warning::' : hasColors ? '\x1B[93m⚠\x1B[m' : '⚠';
 const errorSymbol = isInGitHub ? '::error::' : hasColors ? '\x1B[91m✖\x1B[m' : '✖';

@@ -6,11 +6,15 @@ const utils = require('./utils.cjs');
 try {
 	const packageMeta = JSON.parse(fs.readFileSync('package.json', 'utf8'));
 
-	if (typeof packageMeta !== 'object' || packageMeta === null) {
-		throw new TypeError('Invalid package json');
+	if (!utils.isObject(packageMeta)) {
+		throw new TypeError('Invalid package.json');
 	}
 
-	const nodeVersion = packageMeta.engines?.node;
+	if (!utils.isObject(packageMeta.engines)) {
+		throw new TypeError('No engines field found, can not determine Node.JS version');
+	}
+
+	const nodeVersion = packageMeta.engines.node;
 
 	if (typeof nodeVersion !== 'string') {
 		throw new Error('Node.JS version not found');
@@ -24,7 +28,7 @@ try {
 
 	const pnpmVersion = packageMeta.packageManager;
 
-	if (!pnpmVersion) {
+	if (typeof pnpmVersion !== 'string') {
 		throw new Error('pnpm version not found');
 	}
 

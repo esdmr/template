@@ -8,7 +8,7 @@ const errorSymbol = isInGitHub ? '::error::' : hasColors ? '\x1B[91m✖\x1B[m' :
 
 /** @param {unknown[]} args */
 exports.log = (...args) => {
-	// This uses `console.warn` because it should be outputted to the stderr.
+	// This uses `console.warn` because it should output to the stderr.
 	console.warn(logSymbol, ...args);
 };
 

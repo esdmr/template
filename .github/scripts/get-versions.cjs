@@ -11,7 +11,7 @@ try {
 	}
 
 	if (!utils.isObject(packageMeta.engines)) {
-		throw new TypeError('No engines field found, can not determine Node.JS version');
+		throw new TypeError('No “engines” field found, can not determine Node.JS version');
 	}
 
 	const nodeVersion = packageMeta.engines.node;
@@ -23,7 +23,7 @@ try {
 	const pinnedNodeVersion = nodeVersion.replace(/^(?:[<>]=|\^|~)/, '');
 
 	if (!pinnedNodeVersion.match(/^\d+(?:\.\d+){0,2}$/)) {
-		throw new Error(`Invalid Node.JS version: ${pinnedNodeVersion}`);
+		throw new Error(`Invalid Node.JS version: “${pinnedNodeVersion}”`);
 	}
 
 	const pnpmVersion = packageMeta.packageManager;
@@ -35,7 +35,7 @@ try {
 	const pinnedPNPMVersion = pnpmVersion.replace(/^pnpm@/, '');
 
 	if (!pinnedPNPMVersion.match(/^\d+(?:\.\d+){2}$/)) {
-		throw new Error(`Invalid pnpm version: ${pinnedPNPMVersion}`);
+		throw new Error(`Invalid pnpm version: “${pinnedPNPMVersion}”`);
 	}
 
 	utils.log('Node.JS version:', pinnedNodeVersion);

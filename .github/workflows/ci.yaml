@@ -12,13 +12,13 @@ on:
       - master
       - releases/**
 
-env:
-  JOB_NODE_VERSION: 16.x
-  JOB_PNPM_VERSION: 6
-
 jobs:
   lint:
     name: CI
+    strategy:
+      matrix:
+        node:
+          - '16'
     runs-on: ubuntu-latest
 
     steps:
@@ -28,12 +28,12 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@1f8c6b94b26d0feae1e387ca63ccbdc44d27b561 # renovate: tag=v2
         with:
-          node-version: ${{ env.JOB_NODE_VERSION }}
+          node-version: ${{ matrix.node }}
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@646cdf48217256a3d0b80361c5a50727664284f2 # renovate: tag=v2.0.1
-        with:
-          version: ${{ env.JOB_PNPM_VERSION }}
+        run: |-
+          corepack enable
+          pnpm --version
 
       - name: Set pnpm store-dir
         run: pnpm config set store-dir ~/.pnpm-store

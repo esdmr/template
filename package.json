@@ -32,7 +32,6 @@
     "changeset": "changeset",
     "changeset:version": "changeset version",
     "clean": "rimraf build .nyc_output coverage",
-    "preinstall": "npx -y only-allow pnpm",
     "lint": "xo",
     "lint:fix": "xo --fix",
     "prepack": "node scripts/prepack.js",
@@ -58,8 +57,7 @@
     "xo": "0.48.0"
   },
   "engines": {
-    "node": ">=16",
-    "pnpm": "6"
+    "node": ">=16"
   },
   "imports": {
     "#src/*": "./build/*",

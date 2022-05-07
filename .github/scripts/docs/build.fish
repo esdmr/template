@@ -24,8 +24,8 @@ for line in (assert node (status dirname)/parse-exports.cjs $dts_files)
 
     echo Map $map[1] to $map[2].
     assert node (status dirname)/update-config.cjs $map[2]
-    assert pnpx api-extractor run --local --verbose
-    assert pnpx api-documenter markdown -i build/api -o build/docs_temp
+    assert pnpm exec api-extractor run --local --verbose
+    assert pnpm exec api-documenter markdown -i build/api -o build/docs_temp
 
     for file in (find build/docs_temp -type f -name "$placeholder.*")
         set -l destination (string replace -af $placeholder \

@@ -11,9 +11,8 @@ env:
   GIT_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
   JOB_AUTHOR_NAME: ${{ github.event.head_commit.author.name }}
   JOB_AUTHOR_EMAIL: ${{ github.event.head_commit.author.email }}
-  JOB_NODE_VERSION: 16.x
-  JOB_PNPM_VERSION: 6
-  JOB_RUBY_VERSION: 2.7
+  JOB_NODE_VERSION: '16'
+  JOB_RUBY_VERSION: '2.7'
   JOB_COMMIT_ORIGINAL_ID: ${{ github.event.head_commit.id }}
   JOB_COMMIT_ORIGINAL_URL: ${{ github.event.head_commit.url }}
   JOB_COMMIT_MESSAGE: |-
@@ -42,9 +41,9 @@ jobs:
           node-version: ${{ env.JOB_NODE_VERSION }}
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@646cdf48217256a3d0b80361c5a50727664284f2 # renovate: tag=v2.0.1
-        with:
-          version: ${{ env.JOB_PNPM_VERSION }}
+        run: |-
+          corepack enable
+          pnpm --version
 
       - name: Setup pnpm store-dir
         run: pnpm config set store-dir ~/.pnpm-store/current/

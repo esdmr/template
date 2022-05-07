@@ -108,7 +108,7 @@ function getExportsObject (exports) {
 			return;
 		}
 
-		utils.log('  ⟶ ', relative);
+		utils.log('  →', relative);
 
 		return {
 			'.': relative,
@@ -151,7 +151,7 @@ function getExportsObject (exports) {
 		const relative = toRelative(value.types);
 
 		if (relative !== undefined) {
-			utils.log('  ⟶ ', relative);
+			utils.log('  →', relative);
 
 			exportsObject[key] = relative;
 		}
@@ -181,7 +181,7 @@ function getTypesObject (types) {
 		return;
 	}
 
-	utils.log('  ⟶ ', relative);
+	utils.log('  →', relative);
 
 	return {
 		'.': relative,

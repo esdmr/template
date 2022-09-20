@@ -43,7 +43,7 @@
     "watch": "tsc -b -w"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "7.18.9",
+    "@babel/eslint-parser": "7.19.1",
     "@changesets/cli": "2.24.4",
     "@microsoft/api-documenter": "7.13.40",
     "@microsoft/api-extractor": "7.18.6",

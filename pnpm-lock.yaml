@@ -7,7 +7,7 @@ overrides:
 packageExtensionsChecksum: 8381ec6668a830d89d827d640a385305
 
 specifiers:
-  '@babel/eslint-parser': 7.18.9
+  '@babel/eslint-parser': 7.19.1
   '@changesets/cli': 2.24.4
   '@microsoft/api-documenter': 7.13.40
   '@microsoft/api-extractor': 7.18.6
@@ -21,7 +21,7 @@ specifiers:
   xo: 0.49.0
 
 devDependencies:
-  '@babel/eslint-parser': 7.18.9
+  '@babel/eslint-parser': 7.19.1
   '@changesets/cli': 2.24.4
   '@microsoft/api-documenter': 7.13.40
   '@microsoft/api-extractor': 7.18.6
@@ -71,8 +71,8 @@ packages:
       - supports-color
     dev: true
 
-  /@babel/eslint-parser/7.18.9:
-    resolution: {integrity: sha512-KzSGpMBggz4fKbRbWLNyPVTuQr6cmCcBhOyXTw/fieOVaw5oYAwcAj4a7UKcDYCPxQq+CG1NCDZH9e2JTXquiQ==}
+  /@babel/eslint-parser/7.19.1:
+    resolution: {integrity: sha512-AqNf2QWt1rtu2/1rLswy6CDP7H9Oh3mMhk177Y67Rg8d7RD9WfOLLv8CGn6tisFvS2htm86yIe1yLF6I1UDaGQ==}
     engines: {node: ^10.13.0 || ^12.13.0 || >=14.0.0}
     peerDependencies:
       '@babel/core': '>=7.11.0'
@@ -83,7 +83,7 @@ packages:
       eslint:
         optional: true
     dependencies:
-      eslint-scope: 5.1.1
+      '@nicolo-ribaudo/eslint-scope-5-internals': 5.1.1-v1
       eslint-visitor-keys: 2.1.0
       semver: 6.3.0
     dev: true
@@ -578,6 +578,12 @@ packages:
 
   /@microsoft/tsdoc/0.13.2:
     resolution: {integrity: sha512-WrHvO8PDL8wd8T2+zBGKrMwVL5IyzR3ryWUsl0PXgEV0QHup4mTLi0QcATefGI6Gx9Anu7vthPyyyLpY0EpiQg==}
+    dev: true
+
+  /@nicolo-ribaudo/eslint-scope-5-internals/5.1.1-v1:
+    resolution: {integrity: sha512-54/JRvkLIzzDWshCWfuhadfrfZVPiElY8Fcgmg1HroEly/EDSszzhBAsarCux+D/kOslTRquNzuyGSmUSTTHGg==}
+    dependencies:
+      eslint-scope: 5.1.1
     dev: true
 
   /@nodelib/fs.scandir/2.1.5:

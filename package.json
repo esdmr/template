@@ -63,7 +63,7 @@
     "#src/*": "./build/*",
     "#test/*": "./build/test/*"
   },
-  "packageManager": "pnpm@7.13.1",
+  "packageManager": "pnpm@7.13.2",
   "pnpm": {
     "overrides": {
       "@types/node": "^16.0.0",

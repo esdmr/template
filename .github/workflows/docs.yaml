@@ -81,13 +81,13 @@ jobs:
 
       # Setup after checkout:
       - name: Cache pnpm modules
-        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # renovate: tag=v2
+        uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7 # v3
         with:
           path: ~/.pnpm-store/current/
           key: ${{ runner.OS }}-pnpm-current-${{ hashFiles('current/pnpm-lock.yaml') }}
 
       - name: Cache pnpm modules for template libraries
-        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # renovate: tag=v2
+        uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7 # v3
         with:
           path: ~/.pnpm-store/docs/
           key: ${{ runner.OS }}-pnpm-docs-${{ hashFiles('master/.github/pages-template/**/pnpm-lock.yaml') }}

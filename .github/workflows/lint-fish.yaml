@@ -29,7 +29,7 @@ jobs:
         uses: fish-actions/install-fish@d6d9d26231a15f8d9a6b3e74b3db45512440e3e8 # renovate: tag=v1.1.0
 
       - name: Checkout branch
-        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # renovate: tag=v2
+        uses: actions/checkout@e2f20e631ae6d7dd3b768f56a5d2af784dd54791 # v2
 
       - name: Lint fish scripts
         run: source .github/scripts/lint-fish.fish
